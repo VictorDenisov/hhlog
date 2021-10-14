@@ -30,6 +30,27 @@ func (t Time) Valid() error {
 	return nil
 }
 
+func (d Date) Valid() error {
+	if len(d) != 8 {
+		return errors.New("Date should have six digits")
+	}
+
+	for _, c := range d {
+		if !unicode.IsDigit(c) {
+			return errors.New("Date should contain only digits")
+		}
+	}
+	month := (d[4]-'0')*10 + (d[5] - '0')
+	if month > 12 || month < 1 {
+		return errors.New("Month should be in the range 1-12")
+	}
+	day := (d[6]-'0')*10 + (d[7] - '0')
+	if day > 31 || day < 1 {
+		return errors.New("Day should be in the range 1-31")
+	}
+	return nil
+}
+
 type Contact struct {
 	Frequency string
 	Call      string
