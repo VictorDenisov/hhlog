@@ -12,6 +12,8 @@ type Date string
 
 type Time string
 
+type Mode string
+
 func (t Time) Valid() error {
 	if len(t) != 4 {
 		return errors.New("Time should have four digits")
@@ -52,8 +54,9 @@ func (d Date) Valid() error {
 }
 
 type Contact struct {
-	Frequency string
-	Call      string
-	Date      string
-	Time      string
+	Frequency Frequency
+	Call      Call
+	Date      Date
+	Time      Time
+	Mode      Mode
 }
