@@ -9,13 +9,6 @@ import (
 const (
 	ADIF     = "adi"
 	CABRILLO = "cbr"
-
-	FREQUENCY = "%f"
-	CALL      = "%c"
-	DATE      = "%d"
-	TIME      = "%t"
-	BAND      = "%b"
-	MODE      = "%m"
 )
 
 func main() {
@@ -27,6 +20,12 @@ func main() {
 	flag.StringVar(&outFormat, "out", "", "Output format")
 	flag.Var(&inFile, "in", "Input file")
 	flag.Parse()
+
+	_, err := readInputFiles(inFile)
+	if err != nil {
+		fmt.Printf("Failed to read input files\n")
+		os.Exit(1)
+	}
 
 	switch outFormat {
 	case ADIF:
