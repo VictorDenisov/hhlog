@@ -28,7 +28,7 @@ func readInputFiles(files StringArray) (cs []Contact, err error) {
 	return cs, nil
 }
 
-func readStructure(reader *bufio.Reader) ([]string, error) {
+func readStructure(reader *bufio.Reader) ([]FieldSetter, error) {
 	line := ""
 	for {
 		l, _, err := reader.ReadLine()
@@ -43,5 +43,20 @@ func readStructure(reader *bufio.Reader) ([]string, error) {
 	}
 
 	verbs := strings.Split(line, "\t")
-	return verbs, nil
+	setters := make([]FieldSetter, len(verbs))
+	for i, v := range verbs {
+		switch v {
+		case FREQUENCY:
+			setters[i] = FrequencySetter
+		case CALL:
+			setters[i] = CallSetter
+		case DATE:
+			setters[i] = DateSetter
+		case TIME:
+			setters[i] = TimeSetter
+		case MODE:
+			setters[i] = ModeSetter
+		}
+	}
+	return setters, nil
 }

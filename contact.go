@@ -6,6 +6,7 @@ import (
 )
 
 type Frequency string
+
 type Call string
 
 type Date string
@@ -60,3 +61,23 @@ type Contact struct {
 	Time      Time
 	Mode      Mode
 }
+
+type FieldSetter func(c *Contact, s string)
+
+var (
+	FrequencySetter = func(c *Contact, s string) {
+		c.Frequency = Frequency(s)
+	}
+	CallSetter = func(c *Contact, s string) {
+		c.Call = Call(s)
+	}
+	DateSetter = func(c *Contact, s string) {
+		c.Date = Date(s)
+	}
+	TimeSetter = func(c *Contact, s string) {
+		c.Time = Time(s)
+	}
+	ModeSetter = func(c *Contact, s string) {
+		c.Mode = Mode(s)
+	}
+)
