@@ -21,7 +21,7 @@ func main() {
 	flag.Var(&inFile, "in", "Input file")
 	flag.Parse()
 
-	_, err := readInputFiles(inFile)
+	contacts, err := readInputFiles(inFile)
 	if err != nil {
 		fmt.Printf("Failed to read input files\n")
 		os.Exit(1)
@@ -29,7 +29,7 @@ func main() {
 
 	switch outFormat {
 	case ADIF:
-		fmt.Printf("%v\n", inFile)
+		fmt.Printf("%v\n", contacts)
 	case CABRILLO:
 	default:
 		fmt.Printf("Unknown output format: %v\n", outFormat)
