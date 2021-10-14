@@ -10,7 +10,7 @@ import (
 )
 
 func TestReadStructure(t *testing.T) {
-	input := "\" %f\t%c\t%d\t%t\t%m"
+	input := "\" %f\t%c\t%d\t%t\t%m\n"
 	inputReader := bufio.NewReader(strings.NewReader(input))
 	r, e := readStructure(inputReader)
 	assert.Nil(t, e)
@@ -32,7 +32,7 @@ func TestReadStructure(t *testing.T) {
 }
 
 func TestReadContacts(t *testing.T) {
-	template := "\" %c\t%t"
+	template := "\" %c\t%t\n"
 	inputReader := bufio.NewReader(strings.NewReader(template))
 	setters, e := readStructure(inputReader)
 	assert.Nil(t, e)

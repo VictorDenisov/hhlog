@@ -41,7 +41,7 @@ func readInputFiles(files StringArray) (cs []Contact, err error) {
 func readStructure(reader *bufio.Reader) ([]FieldSetter, error) {
 	line := ""
 	for {
-		l, _, err := reader.ReadLine()
+		l, err := reader.ReadString('\n')
 		if err != nil {
 			return nil, err
 		}
@@ -73,7 +73,7 @@ func readStructure(reader *bufio.Reader) ([]FieldSetter, error) {
 
 func readContacts(reader *bufio.Reader, setters []FieldSetter) (contacts []Contact, err error) {
 	for {
-		l, _, err := reader.ReadLine()
+		l, err := reader.ReadString('\n')
 		if err == io.EOF {
 			return contacts, nil
 		}
