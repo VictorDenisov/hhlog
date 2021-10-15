@@ -8,7 +8,8 @@ import (
 
 func TestParseWritingTemplate(t *testing.T) {
 	input := "%f\t%c\t%d\t%t\t%m"
-	r := parseWritingTemplate(input)
+	r, e := parseWritingTemplate(input)
+	assert.Nil(t, e)
 
 	expectedValues := []string{
 		"frequency",
