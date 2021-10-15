@@ -15,9 +15,11 @@ func main() {
 	var (
 		outFormat string
 		inFile    StringArray
+		template  string
 	)
 
 	flag.StringVar(&outFormat, "out", "", "Output format")
+	flag.StringVar(&template, "tpl", "", "Output template")
 	flag.Var(&inFile, "in", "Input file")
 	flag.Parse()
 

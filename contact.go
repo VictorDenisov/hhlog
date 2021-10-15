@@ -81,3 +81,23 @@ var (
 		c.Mode = Mode(s)
 	}
 )
+
+type FieldGetter func(c *Contact) string
+
+var (
+	FrequencyGetter = func(c *Contact) string {
+		return string(c.Frequency)
+	}
+	CallGetter = func(c *Contact) string {
+		return string(c.Call)
+	}
+	DateGetter = func(c *Contact) string {
+		return string(c.Date)
+	}
+	TimeGetter = func(c *Contact) string {
+		return string(c.Time)
+	}
+	ModeGetter = func(c *Contact) string {
+		return string(c.Mode)
+	}
+)
