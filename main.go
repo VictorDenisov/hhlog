@@ -23,6 +23,14 @@ func main() {
 	flag.Var(&inFile, "in", "Input file")
 	flag.Parse()
 
+	getters, err := parseWritingTemplate(template)
+	if err != nil {
+		fmt.Printf("Failed to parse writing template: %v\n", err)
+		os.Exit(1)
+	}
+
+	fmt.Printf("%v\n", getters)
+
 	contacts, err := readInputFiles(inFile)
 	if err != nil {
 		fmt.Printf("Failed to read input files\n")
