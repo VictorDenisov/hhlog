@@ -24,3 +24,24 @@ func parseReadingTemplate(line string) []FieldSetter {
 	}
 	return setters
 }
+
+func parseWritingTemplate(line string) []FieldGetter {
+
+	verbs := strings.Split(line, "\t")
+	getters := make([]FieldGetter, len(verbs))
+	for i, v := range verbs {
+		switch v {
+		case FREQUENCY:
+			getters[i] = FrequencyGetter
+		case CALL:
+			getters[i] = CallGetter
+		case DATE:
+			getters[i] = DateGetter
+		case TIME:
+			getters[i] = TimeGetter
+		case MODE:
+			getters[i] = ModeGetter
+		}
+	}
+	return getters
+}
