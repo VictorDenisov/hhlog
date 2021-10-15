@@ -52,23 +52,7 @@ func readStructure(reader *bufio.Reader) ([]FieldSetter, error) {
 		}
 	}
 
-	verbs := strings.Split(line, "\t")
-	setters := make([]FieldSetter, len(verbs))
-	for i, v := range verbs {
-		switch v {
-		case FREQUENCY:
-			setters[i] = FrequencySetter
-		case CALL:
-			setters[i] = CallSetter
-		case DATE:
-			setters[i] = DateSetter
-		case TIME:
-			setters[i] = TimeSetter
-		case MODE:
-			setters[i] = ModeSetter
-		}
-	}
-	return setters, nil
+	return parseReadingTemplate(line), nil
 }
 
 func readContacts(reader *bufio.Reader, setters []FieldSetter) (contacts []Contact, err error) {
