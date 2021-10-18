@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"strings"
 	"unicode"
 )
 
@@ -88,6 +89,7 @@ type FieldGetterVisitor interface {
 	visitDate(g *DateGetter)
 	visitTime(g *TimeGetter)
 	visitMode(g *ModeGetter)
+	visitBand(g *BandGetter)
 }
 
 type FieldGetter interface {
@@ -153,4 +155,22 @@ func (g *ModeGetter) get(c *Contact) {
 
 func (g *ModeGetter) accept(v FieldGetterVisitor) {
 	v.visitMode(g)
+}
+
+type BandGetter struct {
+	val string
+}
+
+func (g *BandGetter) get(c *Contact) {
+	f := string(c.Frequency)
+	if strings.HasPrefix(f, "7") {
+		g.val = "40M"
+	}
+	if strings.HasPrefix(f, "14") {
+		g.val = "20M"
+	}
+}
+
+func (g *BandGetter) accept(v FieldGetterVisitor) {
+	v.visitBand(g)
 }

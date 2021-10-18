@@ -42,6 +42,8 @@ func parseWritingTemplate(line string) ([]FieldGetter, error) {
 			getters[i] = &TimeGetter{}
 		case MODE:
 			getters[i] = &ModeGetter{}
+		case BAND:
+			getters[i] = &BandGetter{}
 		default:
 			return nil, errors.New("Unknown verb: " + v)
 		}

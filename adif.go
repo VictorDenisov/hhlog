@@ -49,3 +49,8 @@ func (v *FieldPrinter) visitMode(g *ModeGetter) {
 	v.field = "MODE"
 	v.val = g.val
 }
+
+func (v *FieldPrinter) visitBand(g *BandGetter) {
+	v.field = "BAND"
+	v.val = g.val
+}
