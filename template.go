@@ -28,7 +28,7 @@ func parseReadingTemplate(line string) []FieldSetter {
 
 func parseWritingTemplate(line string) ([]FieldGetter, error) {
 
-	verbs := strings.Split(line, "\t")
+	verbs := strings.Split(line, " ")
 	getters := make([]FieldGetter, len(verbs))
 	for i, v := range verbs {
 		switch v {

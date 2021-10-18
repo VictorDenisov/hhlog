@@ -29,8 +29,6 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Printf("%v\n", getters)
-
 	contacts, err := readInputFiles(inFile)
 	if err != nil {
 		fmt.Printf("Failed to read input files\n")
@@ -39,7 +37,7 @@ func main() {
 
 	switch outFormat {
 	case ADIF:
-		writeContacts(contacts, getters)
+		renderAdif(getters, contacts)
 	case CABRILLO:
 	default:
 		fmt.Printf("Unknown output format: %v\n", outFormat)
