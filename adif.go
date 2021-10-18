@@ -6,10 +6,13 @@ import (
 
 func renderAdif(getters []FieldGetter, contacts []Contact) {
 	for _, c := range contacts {
-		for _, g := range getters {
+		for i, g := range getters {
 			fp := &FieldPrinter{}
 			g.get(&c)
 			g.accept(fp)
+			if i > 0 {
+				fmt.Printf("    ")
+			}
 			fp.printField()
 		}
 		fmt.Printf("<EOR>\n")
