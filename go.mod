@@ -1,4 +1,4 @@
-module github.com/VictorDenisov/ham_logger
+module github.com/VictorDenisov/hhlog
 
 go 1.14
 
