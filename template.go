@@ -33,15 +33,15 @@ func parseWritingTemplate(line string) ([]FieldGetter, error) {
 	for i, v := range verbs {
 		switch v {
 		case FREQUENCY:
-			getters[i] = FrequencyGetter
+			getters[i] = &FrequencyGetter{}
 		case CALL:
-			getters[i] = CallGetter
+			getters[i] = &CallGetter{}
 		case DATE:
-			getters[i] = DateGetter
+			getters[i] = &DateGetter{}
 		case TIME:
-			getters[i] = TimeGetter
+			getters[i] = &TimeGetter{}
 		case MODE:
-			getters[i] = ModeGetter
+			getters[i] = &ModeGetter{}
 		default:
 			return nil, errors.New("Unknown verb: " + v)
 		}

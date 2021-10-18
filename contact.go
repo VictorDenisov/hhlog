@@ -82,22 +82,75 @@ var (
 	}
 )
 
-type FieldGetter func(c *Contact) string
+type FieldGetterVisitor interface {
+	visitFrequency(g *FrequencyGetter)
+	visitCall(g *CallGetter)
+	visitDate(g *DateGetter)
+	visitTime(g *TimeGetter)
+	visitMode(g *ModeGetter)
+}
 
-var (
-	FrequencyGetter = func(c *Contact) string {
-		return string(c.Frequency)
-	}
-	CallGetter = func(c *Contact) string {
-		return string(c.Call)
-	}
-	DateGetter = func(c *Contact) string {
-		return string(c.Date)
-	}
-	TimeGetter = func(c *Contact) string {
-		return string(c.Time)
-	}
-	ModeGetter = func(c *Contact) string {
-		return string(c.Mode)
-	}
-)
+type FieldGetter interface {
+	get(c *Contact)
+	accept(v FieldGetterVisitor)
+}
+
+type FrequencyGetter struct {
+	val string
+}
+
+func (g *FrequencyGetter) get(c *Contact) {
+	g.val = string(c.Frequency)
+}
+
+func (g *FrequencyGetter) accept(v FieldGetterVisitor) {
+	v.visitFrequency(g)
+}
+
+type CallGetter struct {
+	val string
+}
+
+func (g *CallGetter) get(c *Contact) {
+	g.val = string(c.Call)
+}
+
+func (g *CallGetter) accept(v FieldGetterVisitor) {
+	v.visitCall(g)
+}
+
+type DateGetter struct {
+	val string
+}
+
+func (g *DateGetter) get(c *Contact) {
+	g.val = string(c.Date)
+}
+
+func (g *DateGetter) accept(v FieldGetterVisitor) {
+	v.visitDate(g)
+}
+
+type TimeGetter struct {
+	val string
+}
+
+func (g *TimeGetter) get(c *Contact) {
+	g.val = string(c.Time)
+}
+
+func (g *TimeGetter) accept(v FieldGetterVisitor) {
+	v.visitTime(g)
+}
+
+type ModeGetter struct {
+	val string
+}
+
+func (g *ModeGetter) get(c *Contact) {
+	g.val = string(c.Mode)
+}
+
+func (g *ModeGetter) accept(v FieldGetterVisitor) {
+	v.visitMode(g)
+}

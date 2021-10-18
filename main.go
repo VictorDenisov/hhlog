@@ -39,7 +39,7 @@ func main() {
 
 	switch outFormat {
 	case ADIF:
-		fmt.Printf("%v\n", contacts)
+		writeContacts(contacts, getters)
 	case CABRILLO:
 	default:
 		fmt.Printf("Unknown output format: %v\n", outFormat)
