@@ -65,6 +65,7 @@ func readContacts(reader *bufio.Reader, setters []FieldSetter) (contacts []Conta
 			return nil, err
 		}
 		trimmedLine := strings.TrimSpace(string(l))
+		trimmedLine = stripComment(trimmedLine)
 		var fields []string
 		if trimmedLine != "" {
 			fields = strings.Split(trimmedLine, "\t")
@@ -78,4 +79,12 @@ func readContacts(reader *bufio.Reader, setters []FieldSetter) (contacts []Conta
 		}
 		contacts = append(contacts, contact)
 	}
+}
+
+func stripComment(line string) string {
+	p := strings.Index(line, "\"")
+	if p == -1 {
+		return line
+	}
+	return strings.TrimSpace(line[0:p])
 }
