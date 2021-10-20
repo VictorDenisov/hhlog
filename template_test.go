@@ -7,7 +7,7 @@ import (
 )
 
 func TestParseWritingTemplate(t *testing.T) {
-	input := "%f\t%c\t%d\t%t\t%m"
+	input := "%f %c %d %t %m"
 	r, e := parseWritingTemplate(input)
 	assert.Nil(t, e)
 
@@ -59,5 +59,9 @@ func (v *ValueVisitor) visitTime(g *TimeGetter) {
 }
 
 func (v *ValueVisitor) visitMode(g *ModeGetter) {
+	v.val = g.val
+}
+
+func (v *ValueVisitor) visitBand(g *BandGetter) {
 	v.val = g.val
 }
