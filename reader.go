@@ -63,7 +63,7 @@ func readContacts(lr *LineReader, setters []FieldSetter) (contacts []Contact, er
 			fields = strings.Split(trimmedLine, "\t")
 		}
 		if len(fields) != len(setters) {
-			return nil, fmt.Errorf("The number of fields in a line doesn't match the template")
+			return nil, fmt.Errorf("Line %v: Wrong number of fields.", lr.LineNumber())
 		}
 		contact := Contact{}
 		for i, f := range fields {
