@@ -2,7 +2,7 @@ package main
 
 import (
 	"bufio"
-	"errors"
+	"fmt"
 	"io"
 	"os"
 	"strings"
@@ -63,7 +63,7 @@ func readContacts(lr *LineReader, setters []FieldSetter) (contacts []Contact, er
 			fields = strings.Split(trimmedLine, "\t")
 		}
 		if len(fields) != len(setters) {
-			return nil, errors.New("The number of fields in a line doesn't match the template")
+			return nil, fmt.Errorf("The number of fields in a line doesn't match the template")
 		}
 		contact := Contact{}
 		for i, f := range fields {
