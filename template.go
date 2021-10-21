@@ -2,10 +2,11 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"strings"
 )
 
-func parseReadingTemplate(line string) []FieldSetter {
+func parseReadingTemplate(line string) ([]FieldSetter, error) {
 
 	verbs := strings.Split(line, "\t")
 	setters := make([]FieldSetter, len(verbs))
@@ -21,9 +22,11 @@ func parseReadingTemplate(line string) []FieldSetter {
 			setters[i] = TimeSetter
 		case MODE:
 			setters[i] = ModeSetter
+		default:
+			return nil, fmt.Errorf("Unknown verb: %v", v)
 		}
 	}
-	return setters
+	return setters, nil
 }
 
 func parseWritingTemplate(line string) ([]FieldGetter, error) {

@@ -44,7 +44,7 @@ func readStructure(lr *LineReader) ([]FieldSetter, error) {
 		return nil, err
 	}
 
-	return parseReadingTemplate(l), nil
+	return parseReadingTemplate(l)
 }
 
 func readContacts(lr *LineReader, setters []FieldSetter) (contacts []Contact, err error) {
