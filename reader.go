@@ -97,7 +97,7 @@ func NewLineReader(f io.Reader) *LineReader {
 	return &LineReader{bufio.NewReader(f)}
 }
 
-func (lr *LineReader) readLine() (line string, comment string, err error) {
+func (lr *LineReader) ReadLine() (line string, comment string, err error) {
 	l, err := lr.reader.ReadString('\n')
 	if err != nil {
 		return "", "", err

@@ -61,7 +61,7 @@ func TestReadContactsWithComment(t *testing.T) {
 func TestLineReader(t *testing.T) {
 	template := "line\"comment\n"
 	lr := NewLineReader(strings.NewReader(template))
-	l, c, err := lr.readLine()
+	l, c, err := lr.ReadLine()
 	assert.Nil(t, err)
 	assert.Equal(t, "comment", c)
 	assert.Equal(t, "line", l)
@@ -70,7 +70,7 @@ func TestLineReader(t *testing.T) {
 func TestLineReader_CommentOnly(t *testing.T) {
 	template := "\"comment\n"
 	lr := NewLineReader(strings.NewReader(template))
-	l, c, err := lr.readLine()
+	l, c, err := lr.ReadLine()
 	assert.Nil(t, err)
 	assert.Equal(t, "comment", c)
 	assert.Equal(t, "", l)
@@ -79,7 +79,7 @@ func TestLineReader_CommentOnly(t *testing.T) {
 func TestLineReader_LineOnly(t *testing.T) {
 	template := "line\n"
 	lr := NewLineReader(strings.NewReader(template))
-	l, c, err := lr.readLine()
+	l, c, err := lr.ReadLine()
 	assert.Nil(t, err)
 	assert.Equal(t, "", c)
 	assert.Equal(t, "line", l)
@@ -88,6 +88,6 @@ func TestLineReader_LineOnly(t *testing.T) {
 func TestLineReader_EOF(t *testing.T) {
 	template := ""
 	lr := NewLineReader(strings.NewReader(template))
-	_, _, err := lr.readLine()
+	_, _, err := lr.ReadLine()
 	assert.Equal(t, io.EOF, err)
 }
