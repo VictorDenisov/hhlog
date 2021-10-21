@@ -24,7 +24,7 @@ func readInputFiles(files StringArray) (cs []Contact, err error) {
 		if err != nil {
 			return cs, err
 		}
-		reader := bufio.NewReader(f)
+		reader := NewLineReader(f)
 		setters, err := readStructure(reader)
 		if err != nil {
 			return nil, err
@@ -38,26 +38,18 @@ func readInputFiles(files StringArray) (cs []Contact, err error) {
 	return cs, nil
 }
 
-func readStructure(reader *bufio.Reader) ([]FieldSetter, error) {
-	line := ""
-	for {
-		l, err := reader.ReadString('\n')
-		if err != nil {
-			return nil, err
-		}
-		trimmedLine := strings.TrimSpace(string(l))
-		if trimmedLine != "" {
-			line = strings.TrimSpace(trimmedLine[1:])
-			break
-		}
+func readStructure(lr *LineReader) ([]FieldSetter, error) {
+	_, l, err := lr.ReadLine()
+	if err != nil {
+		return nil, err
 	}
 
-	return parseReadingTemplate(line), nil
+	return parseReadingTemplate(l), nil
 }
 
-func readContacts(reader *bufio.Reader, setters []FieldSetter) (contacts []Contact, err error) {
+func readContacts(lr *LineReader, setters []FieldSetter) (contacts []Contact, err error) {
 	for {
-		l, err := reader.ReadString('\n')
+		l, _, err := lr.ReadLine()
 		if err == io.EOF {
 			return contacts, nil
 		}

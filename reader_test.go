@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bufio"
 	_ "errors"
 	"io"
 	"strings"
@@ -12,7 +11,7 @@ import (
 
 func TestReadStructure(t *testing.T) {
 	input := "\" %f\t%c\t%d\t%t\t%m\n"
-	inputReader := bufio.NewReader(strings.NewReader(input))
+	inputReader := NewLineReader(strings.NewReader(input))
 	r, e := readStructure(inputReader)
 	assert.Nil(t, e)
 
@@ -34,12 +33,12 @@ func TestReadStructure(t *testing.T) {
 
 func TestReadContacts(t *testing.T) {
 	template := "\" %c\t%t\n"
-	inputReader := bufio.NewReader(strings.NewReader(template))
+	inputReader := NewLineReader(strings.NewReader(template))
 	setters, e := readStructure(inputReader)
 	assert.Nil(t, e)
 
 	input := "q1bro\t1020\n"
-	inputReader = bufio.NewReader(strings.NewReader(input))
+	inputReader = NewLineReader(strings.NewReader(input))
 	cs, e := readContacts(inputReader, setters)
 	assert.Nil(t, e)
 	assert.Equal(t, []Contact{Contact{Call: Call("q1bro"), Time: Time("1020")}}, cs)
@@ -47,12 +46,12 @@ func TestReadContacts(t *testing.T) {
 
 func TestReadContactsWithComment(t *testing.T) {
 	template := "\" %c\t%t\n"
-	inputReader := bufio.NewReader(strings.NewReader(template))
+	inputReader := NewLineReader(strings.NewReader(template))
 	setters, e := readStructure(inputReader)
 	assert.Nil(t, e)
 
 	input := "q1bro\t1020 \" text in the comment \n"
-	inputReader = bufio.NewReader(strings.NewReader(input))
+	inputReader = NewLineReader(strings.NewReader(input))
 	cs, e := readContacts(inputReader, setters)
 	assert.Nil(t, e)
 	assert.Equal(t, []Contact{Contact{Call: Call("q1bro"), Time: Time("1020")}}, cs)
