@@ -31,7 +31,8 @@ func main() {
 
 	contacts, err := readInputFiles(inFile)
 	if err != nil {
-		fmt.Printf("Failed to read input files\n")
+		fmt.Printf("Failed to read input files:\n")
+		fmt.Printf("%v\n", err)
 		os.Exit(1)
 	}
 
