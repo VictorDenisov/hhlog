@@ -104,7 +104,7 @@ func (lr *LineReader) readLine() (line string, comment string, err error) {
 	}
 	p := strings.Index(l, "\"")
 	if p == -1 {
-		return strings.TrimSpace(line), "", nil
+		return strings.TrimSpace(l), "", nil
 	}
 	return strings.TrimSpace(l[0:p]), strings.TrimSpace(l[p+1 : len(l)]), nil
 }

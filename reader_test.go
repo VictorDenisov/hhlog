@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	_ "errors"
+	"io"
 	"strings"
 	"testing"
 
@@ -64,4 +65,29 @@ func TestLineReader(t *testing.T) {
 	assert.Nil(t, err)
 	assert.Equal(t, "comment", c)
 	assert.Equal(t, "line", l)
+}
+
+func TestLineReader_CommentOnly(t *testing.T) {
+	template := "\"comment\n"
+	lr := NewLineReader(strings.NewReader(template))
+	l, c, err := lr.readLine()
+	assert.Nil(t, err)
+	assert.Equal(t, "comment", c)
+	assert.Equal(t, "", l)
+}
+
+func TestLineReader_LineOnly(t *testing.T) {
+	template := "line\n"
+	lr := NewLineReader(strings.NewReader(template))
+	l, c, err := lr.readLine()
+	assert.Nil(t, err)
+	assert.Equal(t, "", c)
+	assert.Equal(t, "line", l)
+}
+
+func TestLineReader_EOF(t *testing.T) {
+	template := ""
+	lr := NewLineReader(strings.NewReader(template))
+	_, _, err := lr.readLine()
+	assert.Equal(t, io.EOF, err)
 }
