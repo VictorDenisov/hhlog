@@ -88,3 +88,23 @@ func stripComment(line string) string {
 	}
 	return strings.TrimSpace(line[0:p])
 }
+
+type LineReader struct {
+	reader *bufio.Reader
+}
+
+func NewLineReader(f io.Reader) *LineReader {
+	return &LineReader{bufio.NewReader(f)}
+}
+
+func (lr *LineReader) readLine() (line string, comment string, err error) {
+	l, err := lr.reader.ReadString('\n')
+	if err != nil {
+		return "", "", err
+	}
+	p := strings.Index(l, "\"")
+	if p == -1 {
+		return strings.TrimSpace(line), "", nil
+	}
+	return strings.TrimSpace(l[0:p]), strings.TrimSpace(l[p+1 : len(l)]), nil
+}

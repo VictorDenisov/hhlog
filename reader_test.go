@@ -56,3 +56,12 @@ func TestReadContactsWithComment(t *testing.T) {
 	assert.Nil(t, e)
 	assert.Equal(t, []Contact{Contact{Call: Call("q1bro"), Time: Time("1020")}}, cs)
 }
+
+func TestLineReader(t *testing.T) {
+	template := "line\"comment\n"
+	lr := NewLineReader(strings.NewReader(template))
+	l, c, err := lr.readLine()
+	assert.Nil(t, err)
+	assert.Equal(t, "comment", c)
+	assert.Equal(t, "line", l)
+}
