@@ -56,11 +56,9 @@ func readContacts(lr *LineReader, setters []FieldSetter) (contacts []Contact, er
 		if err != nil {
 			return nil, err
 		}
-		trimmedLine := strings.TrimSpace(string(l))
-		trimmedLine = stripComment(trimmedLine)
 		var fields []string
-		if trimmedLine != "" {
-			fields = strings.Split(trimmedLine, "\t")
+		if l != "" {
+			fields = strings.Split(l, "\t")
 		}
 		if len(fields) != len(setters) {
 			return nil, fmt.Errorf("Line %v: Wrong number of fields.", lr.LineNumber())
@@ -71,14 +69,6 @@ func readContacts(lr *LineReader, setters []FieldSetter) (contacts []Contact, er
 		}
 		contacts = append(contacts, contact)
 	}
-}
-
-func stripComment(line string) string {
-	p := strings.Index(line, "\"")
-	if p == -1 {
-		return line
-	}
-	return strings.TrimSpace(line[0:p])
 }
 
 type LineReader struct {
