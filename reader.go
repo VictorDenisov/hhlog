@@ -54,7 +54,7 @@ func readContacts(lr *LineReader, setters []FieldSetter) (contacts []Contact, er
 			return contacts, nil
 		}
 		if err != nil {
-			return nil, err
+			return nil, fmt.Errorf("Failed to read line %v: %w", lr.LineNumber(), err)
 		}
 		var fields []string
 		if l != "" {
