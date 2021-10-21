@@ -81,11 +81,11 @@ func NewLineReader(f io.Reader) *LineReader {
 }
 
 func (lr *LineReader) ReadLine() (line string, comment string, err error) {
+	lr.lineNumber++
 	l, err := lr.reader.ReadString('\n')
 	if err != nil {
 		return "", "", err
 	}
-	lr.lineNumber++
 	p := strings.Index(l, "\"")
 	if p == -1 {
 		return strings.TrimSpace(l), "", nil
