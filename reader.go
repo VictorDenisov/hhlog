@@ -82,11 +82,12 @@ func stripComment(line string) string {
 }
 
 type LineReader struct {
-	reader *bufio.Reader
+	reader     *bufio.Reader
+	lineNumber int
 }
 
 func NewLineReader(f io.Reader) *LineReader {
-	return &LineReader{bufio.NewReader(f)}
+	return &LineReader{bufio.NewReader(f), 0}
 }
 
 func (lr *LineReader) ReadLine() (line string, comment string, err error) {
@@ -94,9 +95,14 @@ func (lr *LineReader) ReadLine() (line string, comment string, err error) {
 	if err != nil {
 		return "", "", err
 	}
+	lr.lineNumber++
 	p := strings.Index(l, "\"")
 	if p == -1 {
 		return strings.TrimSpace(l), "", nil
 	}
 	return strings.TrimSpace(l[0:p]), strings.TrimSpace(l[p+1 : len(l)]), nil
+}
+
+func (lr *LineReader) LineNumber() int {
+	return lr.lineNumber
 }
