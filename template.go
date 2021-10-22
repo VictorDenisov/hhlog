@@ -6,6 +6,15 @@ import (
 	"strings"
 )
 
+const (
+	FREQUENCY = "%f"
+	CALL      = "%c"
+	DATE      = "%d"
+	TIME      = "%t"
+	BAND      = "%b"
+	MODE      = "%m"
+)
+
 func parseReadingTemplate(line string) ([]FieldSetter, error) {
 
 	verbs := strings.Split(line, "\t")

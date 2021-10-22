@@ -8,15 +8,6 @@ import (
 	"strings"
 )
 
-const (
-	FREQUENCY = "%f"
-	CALL      = "%c"
-	DATE      = "%d"
-	TIME      = "%t"
-	BAND      = "%b"
-	MODE      = "%m"
-)
-
 func readInputFiles(files StringArray) (cs []Contact, err error) {
 	cs = make([]Contact, 0)
 	for _, fileName := range files {
