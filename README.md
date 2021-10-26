@@ -20,3 +20,50 @@ and you are good to upload your logs to POTA or LOTW.
 There are plans to add command line interface to this logger for logging during
 contests. Again no jumping between text fields is expected. Type in only the
 values that you have separated by space or tab and the logger will do the rest.
+
+Usage
+=====
+
+Right the main purpose of hhlog is to convert tab separated files into ADIF
+files. ADIF files are very nicely formatted, but they are not very convenient
+to be typed in by a user.
+
+You can enter the values that are variable - call sign, time. It takes little
+time to type in these values from your field note book. Then you can add
+missing columns using Vim's vertical selection feature - Ctrl - v.
+
+Specify in the header of your file the format of the file.
+The header is a commented line with tab separated flags.
+Currently only these flags are supported:
+
+ - %f - frequency in megahertz
+ - %c - call sign
+ - %d - date. It's an eight digit value: year month day.
+ - %t - time. It's a four digit UTC time: 24 hour, minute.
+ - %b - band. It doesn't need to be specified, but can be used in the output template.
+ - %m - mode.
+
+Sample input file:
+```
+" %c	%t
+q1bro	1020 " comment
+q2bro	1120
+" comment
+q3bro	1130
+```
+
+After this you can excute hhlog to generate your ADIF file:
+
+```
+./hhlog -in input.hhl -out "adi" -tpl "%c %t"
+```
+
+The input files can have extension hhl. They are plain text files and you can
+check them into a git repo(github or bitbucket). Text files are convenient to be
+inspected without any extra app.
+
+Currently only adi output format is supported, but there are plans to introduce
+cabrillo files.
+
+Logs can be stored as plain files in hhl format and then converted to adi or cbr
+as necessary.

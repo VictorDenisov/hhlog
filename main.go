@@ -23,7 +23,7 @@ func main() {
 
 %f - frequency in megahertz
 %c - call sign
-%d - six digits of date: year month day
+%d - eight digits of date: year month day
 %t - four digits of UTC time
 %b - band. Only used in output template
 %m - mode
