@@ -1,5 +1,5 @@
-" %c	%t
-q1bro	1020 " comment
-q2bro	1120
+" %f	%c	%t	%d
+14.112	q1bro	1020	20211012" comment
+14.112	q2bro	1120	20211013
 " comment
-q3bro	1130
+14.112	q3bro	1130	20211014

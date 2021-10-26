@@ -54,6 +54,7 @@ func main() {
 	case ADIF:
 		renderAdif(getters, contacts)
 	case CABRILLO:
+		renderCabrillo(getters, contacts)
 	default:
 		fmt.Printf("Unknown output format: %v\n", outFormat)
 		fmt.Printf("Allowed formats are: %v, %v\n", ADIF, CABRILLO)
