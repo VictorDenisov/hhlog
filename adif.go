@@ -5,6 +5,11 @@ import (
 )
 
 func renderAdif(getters []FieldGetter, contacts []Contact) {
+	fmt.Printf("<adif_ver:5>3.1.2\n")
+	fmt.Printf("<programid:5>hhlog\n")
+	fmt.Printf("<programversion:5>0.0.1\n")
+	fmt.Printf("<EOH>\n")
+
 	for _, c := range contacts {
 		for i, g := range getters {
 			fp := &AdifFieldPrinter{}
