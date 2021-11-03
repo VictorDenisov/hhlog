@@ -62,3 +62,8 @@ func (v *AdifFieldPrinter) visitBand(g *BandGetter) {
 	v.field = "BAND"
 	v.val = g.val
 }
+
+func (v *AdifFieldPrinter) visitSkcc(g *SkccGetter) {
+	v.field = "SKCC"
+	v.val = g.val
+}

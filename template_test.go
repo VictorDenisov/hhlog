@@ -65,3 +65,7 @@ func (v *ValueVisitor) visitMode(g *ModeGetter) {
 func (v *ValueVisitor) visitBand(g *BandGetter) {
 	v.val = g.val
 }
+
+func (v *ValueVisitor) visitSkcc(g *SkccGetter) {
+	v.val = g.val
+}

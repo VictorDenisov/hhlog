@@ -13,6 +13,7 @@ const (
 	TIME      = "%t"
 	BAND      = "%b"
 	MODE      = "%m"
+	SKCC      = "%skcc"
 )
 
 func parseReadingTemplate(line string) ([]FieldSetter, error) {
@@ -40,6 +41,8 @@ func parseReadingTemplate(line string) ([]FieldSetter, error) {
 
 func parseWritingTemplate(line string) ([]FieldGetter, error) {
 
+	var skccDb *SkccDB = nil
+
 	verbs := strings.Split(line, " ")
 	getters := make([]FieldGetter, len(verbs))
 	for i, v := range verbs {
@@ -56,6 +59,11 @@ func parseWritingTemplate(line string) ([]FieldGetter, error) {
 			getters[i] = &ModeGetter{}
 		case BAND:
 			getters[i] = &BandGetter{}
+		case SKCC:
+			if skccDb == nil {
+				skccDb = DownloadSkccRoster()
+			}
+			getters[i] = &SkccGetter{skccDb, ""}
 		default:
 			return nil, errors.New("Unknown verb: " + v)
 		}
