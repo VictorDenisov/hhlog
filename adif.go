@@ -72,3 +72,8 @@ func (v *AdifFieldPrinter) visitName(g *NameGetter) {
 	v.field = "NAME"
 	v.val = g.val
 }
+
+func (v *AdifFieldPrinter) visitSpc(g *SpcGetter) {
+	v.field = "SPC"
+	v.val = g.val
+}

@@ -73,3 +73,7 @@ func (v *ValueVisitor) visitSkcc(g *SkccGetter) {
 func (v *ValueVisitor) visitName(g *NameGetter) {
 	v.val = g.val
 }
+
+func (v *ValueVisitor) visitSpc(g *SpcGetter) {
+	v.val = g.val
+}

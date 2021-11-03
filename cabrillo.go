@@ -60,3 +60,7 @@ func (v *CabrilloFieldPrinter) visitSkcc(g *SkccGetter) {
 func (v *CabrilloFieldPrinter) visitName(g *NameGetter) {
 	v.val = g.val
 }
+
+func (v *CabrilloFieldPrinter) visitSpc(g *SpcGetter) {
+	v.val = g.val
+}

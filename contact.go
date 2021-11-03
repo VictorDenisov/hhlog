@@ -92,6 +92,7 @@ type FieldGetterVisitor interface {
 	visitBand(g *BandGetter)
 	visitSkcc(g *SkccGetter)
 	visitName(g *NameGetter)
+	visitSpc(g *SpcGetter)
 }
 
 type FieldGetter interface {
@@ -203,4 +204,18 @@ func (g *NameGetter) get(c *Contact) {
 
 func (g *NameGetter) accept(v FieldGetterVisitor) {
 	v.visitName(g)
+}
+
+type SpcGetter struct {
+	db  *SkccDB
+	val string
+}
+
+func (g *SpcGetter) get(c *Contact) {
+	call := string(c.Call)
+	g.val = g.db.callIndex[call].Spc
+}
+
+func (g *SpcGetter) accept(v FieldGetterVisitor) {
+	v.visitSpc(g)
 }
