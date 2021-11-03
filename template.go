@@ -14,6 +14,7 @@ const (
 	BAND      = "%b"
 	MODE      = "%m"
 	SKCC      = "%skcc"
+	NAME      = "%n"
 )
 
 func parseReadingTemplate(line string) ([]FieldSetter, error) {
@@ -64,6 +65,11 @@ func parseWritingTemplate(line string) ([]FieldGetter, error) {
 				skccDb = DownloadSkccRoster()
 			}
 			getters[i] = &SkccGetter{skccDb, ""}
+		case NAME:
+			if skccDb == nil {
+				skccDb = DownloadSkccRoster()
+			}
+			getters[i] = &NameGetter{skccDb, ""}
 		default:
 			return nil, errors.New("Unknown verb: " + v)
 		}

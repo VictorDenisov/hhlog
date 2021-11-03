@@ -56,3 +56,7 @@ func (v *CabrilloFieldPrinter) visitBand(g *BandGetter) {
 func (v *CabrilloFieldPrinter) visitSkcc(g *SkccGetter) {
 	v.val = g.val
 }
+
+func (v *CabrilloFieldPrinter) visitName(g *NameGetter) {
+	v.val = g.val
+}

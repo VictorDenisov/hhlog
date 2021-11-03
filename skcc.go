@@ -87,7 +87,7 @@ func (r *TagReader) ReadTag() (res string) {
 func ParseLine(s string) (res SkccMember) {
 	tr := &TagReader{s, "td"}
 	res.Skcc = tr.ReadTag()
-	res.Call = tr.ReadTag()
+	res.Call = strings.ToLower(tr.ReadTag())
 	res.Name = tr.ReadTag()
 	res.City = tr.ReadTag()
 	res.Spc = tr.ReadTag()

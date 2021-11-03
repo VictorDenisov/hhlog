@@ -69,3 +69,7 @@ func (v *ValueVisitor) visitBand(g *BandGetter) {
 func (v *ValueVisitor) visitSkcc(g *SkccGetter) {
 	v.val = g.val
 }
+
+func (v *ValueVisitor) visitName(g *NameGetter) {
+	v.val = g.val
+}

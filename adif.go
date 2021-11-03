@@ -67,3 +67,8 @@ func (v *AdifFieldPrinter) visitSkcc(g *SkccGetter) {
 	v.field = "SKCC"
 	v.val = g.val
 }
+
+func (v *AdifFieldPrinter) visitName(g *NameGetter) {
+	v.field = "NAME"
+	v.val = g.val
+}
