@@ -82,3 +82,8 @@ func (v *AdifFieldPrinter) visitSrx(g *SrxGetter) {
 	v.field = "SRX"
 	v.val = string(g.val)
 }
+
+func (v *AdifFieldPrinter) visitStx(g *StxGetter) {
+	v.field = "STX"
+	v.val = string(g.val)
+}

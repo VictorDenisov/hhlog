@@ -12,6 +12,7 @@ type Date string
 type Time string
 type Mode string
 type Srx string
+type Stx string
 
 func (t Time) Valid() error {
 	if len(t) != 4 {
@@ -59,6 +60,7 @@ type Contact struct {
 	Time      Time
 	Mode      Mode
 	Srx       Srx
+	Stx       Stx
 }
 
 type FieldSetter func(c *Contact, s string)
@@ -82,6 +84,9 @@ var (
 	SrxSetter = func(c *Contact, s string) {
 		c.Srx = Srx(s)
 	}
+	StxSetter = func(c *Contact, s string) {
+		c.Stx = Stx(s)
+	}
 )
 
 type FieldGetterVisitor interface {
@@ -95,6 +100,7 @@ type FieldGetterVisitor interface {
 	visitName(g *NameGetter)
 	visitSpc(g *SpcGetter)
 	visitSrx(g *SrxGetter)
+	visitStx(g *StxGetter)
 }
 
 type FieldGetter interface {
@@ -232,4 +238,16 @@ func (g *SrxGetter) get(c *Contact) {
 
 func (g *SrxGetter) accept(v FieldGetterVisitor) {
 	v.visitSrx(g)
+}
+
+type StxGetter struct {
+	val Stx
+}
+
+func (g *StxGetter) get(c *Contact) {
+	g.val = c.Stx
+}
+
+func (g *StxGetter) accept(v FieldGetterVisitor) {
+	v.visitStx(g)
 }

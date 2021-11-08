@@ -68,3 +68,7 @@ func (v *CabrilloFieldPrinter) visitSpc(g *SpcGetter) {
 func (v *CabrilloFieldPrinter) visitSrx(g *SrxGetter) {
 	v.val = string(g.val)
 }
+
+func (v *CabrilloFieldPrinter) visitStx(g *StxGetter) {
+	v.val = string(g.val)
+}

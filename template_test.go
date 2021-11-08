@@ -26,6 +26,7 @@ func TestParseWritingTemplate(t *testing.T) {
 		"time",
 		"mode",
 		"srx",
+		"stx",
 	}
 
 	values := make([]string, len(r))
@@ -80,5 +81,9 @@ func (v *ValueVisitor) visitSpc(g *SpcGetter) {
 }
 
 func (v *ValueVisitor) visitSrx(g *SrxGetter) {
+	v.val = string(g.val)
+}
+
+func (v *ValueVisitor) visitStx(g *StxGetter) {
 	v.val = string(g.val)
 }
