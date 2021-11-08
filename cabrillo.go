@@ -50,7 +50,12 @@ func (v *CabrilloFieldPrinter) visitMode(g *ModeGetter) {
 }
 
 func (v *CabrilloFieldPrinter) visitBand(g *BandGetter) {
-	v.val = g.val
+	if g.val == "20M" {
+		v.val = "14000"
+	}
+	if g.val == "40M" {
+		v.val = "7000"
+	}
 }
 
 func (v *CabrilloFieldPrinter) visitSkcc(g *SkccGetter) {
