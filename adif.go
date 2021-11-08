@@ -92,3 +92,8 @@ func (v *AdifFieldPrinter) visitPrec(g *PrecGetter) {
 	v.field = "PRECEDENCE"
 	v.val = string(g.val)
 }
+
+func (v *AdifFieldPrinter) visitCk(g *CkGetter) {
+	v.field = "CHECK"
+	v.val = string(g.val)
+}
