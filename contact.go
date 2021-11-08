@@ -13,6 +13,7 @@ type Time string
 type Mode string
 type Srx string
 type Stx string
+type Prec string
 
 func (t Time) Valid() error {
 	if len(t) != 4 {
@@ -61,6 +62,7 @@ type Contact struct {
 	Mode      Mode
 	Srx       Srx
 	Stx       Stx
+	Prec      Prec
 }
 
 type FieldSetter func(c *Contact, s string)
@@ -87,6 +89,9 @@ var (
 	StxSetter = func(c *Contact, s string) {
 		c.Stx = Stx(s)
 	}
+	PrecSetter = func(c *Contact, s string) {
+		c.Prec = Prec(s)
+	}
 )
 
 type FieldGetterVisitor interface {
@@ -101,6 +106,7 @@ type FieldGetterVisitor interface {
 	visitSpc(g *SpcGetter)
 	visitSrx(g *SrxGetter)
 	visitStx(g *StxGetter)
+	visitPrec(g *PrecGetter)
 }
 
 type FieldGetter interface {
@@ -250,4 +256,16 @@ func (g *StxGetter) get(c *Contact) {
 
 func (g *StxGetter) accept(v FieldGetterVisitor) {
 	v.visitStx(g)
+}
+
+type PrecGetter struct {
+	val Prec
+}
+
+func (g *PrecGetter) get(c *Contact) {
+	g.val = c.Prec
+}
+
+func (g *PrecGetter) accept(v FieldGetterVisitor) {
+	v.visitPrec(g)
 }

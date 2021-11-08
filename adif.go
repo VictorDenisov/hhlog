@@ -87,3 +87,8 @@ func (v *AdifFieldPrinter) visitStx(g *StxGetter) {
 	v.field = "STX"
 	v.val = string(g.val)
 }
+
+func (v *AdifFieldPrinter) visitPrec(g *PrecGetter) {
+	v.field = "PRECEDENCE"
+	v.val = string(g.val)
+}
