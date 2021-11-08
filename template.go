@@ -20,6 +20,7 @@ const (
 	STX       = "%stx"
 	PREC      = "%prec"
 	CK        = "%ck"
+	SECT      = "%sect"
 )
 
 func parseReadingTemplate(line string) ([]FieldSetter, error) {
@@ -46,6 +47,8 @@ func parseReadingTemplate(line string) ([]FieldSetter, error) {
 			setters[i] = PrecSetter
 		case CK:
 			setters[i] = CkSetter
+		case SECT:
+			setters[i] = SectSetter
 		default:
 			return nil, fmt.Errorf("Unknown verb: %v", v)
 		}
@@ -96,6 +99,8 @@ func parseWritingTemplate(line string) ([]FieldGetter, error) {
 			getters[i] = &PrecGetter{}
 		case CK:
 			getters[i] = &CkGetter{}
+		case SECT:
+			getters[i] = &SectGetter{}
 		default:
 			return nil, errors.New("Unknown verb: " + v)
 		}

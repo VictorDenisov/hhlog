@@ -97,3 +97,8 @@ func (v *AdifFieldPrinter) visitCk(g *CkGetter) {
 	v.field = "CHECK"
 	v.val = string(g.val)
 }
+
+func (v *AdifFieldPrinter) visitSect(g *SectGetter) {
+	v.field = "ARRL_SECT"
+	v.val = string(g.val)
+}

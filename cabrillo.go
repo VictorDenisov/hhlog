@@ -80,3 +80,7 @@ func (v *CabrilloFieldPrinter) visitPrec(g *PrecGetter) {
 func (v *CabrilloFieldPrinter) visitCk(g *CkGetter) {
 	v.val = string(g.val)
 }
+
+func (v *CabrilloFieldPrinter) visitSect(g *SectGetter) {
+	v.val = string(g.val)
+}

@@ -15,6 +15,7 @@ type Srx string
 type Stx string
 type Prec string
 type Ck string
+type Sect string
 
 func (t Time) Valid() error {
 	if len(t) != 4 {
@@ -65,6 +66,7 @@ type Contact struct {
 	Stx       Stx
 	Prec      Prec
 	Ck        Ck
+	Sect      Sect
 }
 
 type FieldSetter func(c *Contact, s string)
@@ -97,6 +99,9 @@ var (
 	CkSetter = func(c *Contact, s string) {
 		c.Ck = Ck(s)
 	}
+	SectSetter = func(c *Contact, s string) {
+		c.Sect = Sect(s)
+	}
 )
 
 type FieldGetterVisitor interface {
@@ -113,6 +118,7 @@ type FieldGetterVisitor interface {
 	visitStx(g *StxGetter)
 	visitPrec(g *PrecGetter)
 	visitCk(g *CkGetter)
+	visitSect(g *SectGetter)
 }
 
 type FieldGetter interface {
@@ -286,4 +292,16 @@ func (g *CkGetter) get(c *Contact) {
 
 func (g *CkGetter) accept(v FieldGetterVisitor) {
 	v.visitCk(g)
+}
+
+type SectGetter struct {
+	val Sect
+}
+
+func (g *SectGetter) get(c *Contact) {
+	g.val = c.Sect
+}
+
+func (g *SectGetter) accept(v FieldGetterVisitor) {
+	v.visitSect(g)
 }
