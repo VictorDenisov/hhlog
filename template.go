@@ -16,6 +16,7 @@ const (
 	SKCC      = "%skcc"
 	NAME      = "%n"
 	SPC       = "%spc"
+	SRX       = "%srx"
 )
 
 func parseReadingTemplate(line string) ([]FieldSetter, error) {
@@ -34,6 +35,8 @@ func parseReadingTemplate(line string) ([]FieldSetter, error) {
 			setters[i] = TimeSetter
 		case MODE:
 			setters[i] = ModeSetter
+		case SRX:
+			setters[i] = SrxSetter
 		default:
 			return nil, fmt.Errorf("Unknown verb: %v", v)
 		}

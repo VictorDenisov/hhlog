@@ -7,14 +7,11 @@ import (
 )
 
 type Frequency string
-
 type Call string
-
 type Date string
-
 type Time string
-
 type Mode string
+type Srx string
 
 func (t Time) Valid() error {
 	if len(t) != 4 {
@@ -61,6 +58,7 @@ type Contact struct {
 	Date      Date
 	Time      Time
 	Mode      Mode
+	Srx       Srx
 }
 
 type FieldSetter func(c *Contact, s string)
@@ -80,6 +78,9 @@ var (
 	}
 	ModeSetter = func(c *Contact, s string) {
 		c.Mode = Mode(s)
+	}
+	SrxSetter = func(c *Contact, s string) {
+		c.Srx = Srx(s)
 	}
 )
 

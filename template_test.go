@@ -25,6 +25,7 @@ func TestParseWritingTemplate(t *testing.T) {
 		"date",
 		"time",
 		"mode",
+		"srx",
 	}
 
 	values := make([]string, len(r))
