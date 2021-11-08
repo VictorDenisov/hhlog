@@ -78,3 +78,7 @@ func (v *ValueVisitor) visitName(g *NameGetter) {
 func (v *ValueVisitor) visitSpc(g *SpcGetter) {
 	v.val = g.val
 }
+
+func (v *ValueVisitor) visitSrx(g *SrxGetter) {
+	v.val = string(g.val)
+}

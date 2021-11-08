@@ -94,6 +94,7 @@ type FieldGetterVisitor interface {
 	visitSkcc(g *SkccGetter)
 	visitName(g *NameGetter)
 	visitSpc(g *SpcGetter)
+	visitSrx(g *SrxGetter)
 }
 
 type FieldGetter interface {
@@ -219,4 +220,16 @@ func (g *SpcGetter) get(c *Contact) {
 
 func (g *SpcGetter) accept(v FieldGetterVisitor) {
 	v.visitSpc(g)
+}
+
+type SrxGetter struct {
+	val Srx
+}
+
+func (g *SrxGetter) get(c *Contact) {
+	g.val = c.Srx
+}
+
+func (g *SrxGetter) accept(v FieldGetterVisitor) {
+	v.visitSrx(g)
 }

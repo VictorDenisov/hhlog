@@ -79,6 +79,8 @@ func parseWritingTemplate(line string) ([]FieldGetter, error) {
 				skccDb = DownloadSkccRoster()
 			}
 			getters[i] = &SpcGetter{skccDb, ""}
+		case SRX:
+			getters[i] = &SrxGetter{}
 		default:
 			return nil, errors.New("Unknown verb: " + v)
 		}
