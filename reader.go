@@ -15,12 +15,12 @@ func readInputFiles(files StringArray) (cs []Contact, err error) {
 		if err != nil {
 			return cs, err
 		}
-		reader := NewLineReader(f)
-		setters, err := readStructure(reader)
+		lineReader := NewLineReader(f)
+		setters, err := readStructure(lineReader)
 		if err != nil {
 			return nil, err
 		}
-		contacts, err := readContacts(reader, setters)
+		contacts, err := readContacts(lineReader, setters)
 		if err != nil {
 			return nil, err
 		}
@@ -30,12 +30,12 @@ func readInputFiles(files StringArray) (cs []Contact, err error) {
 }
 
 func readStructure(lr *LineReader) ([]FieldSetter, error) {
-	_, l, err := lr.ReadLine()
+	_, c, err := lr.ReadLine()
 	if err != nil {
 		return nil, err
 	}
 
-	return parseReadingTemplate(l)
+	return parseReadingTemplate(c)
 }
 
 func readContacts(lr *LineReader, setters []FieldSetter) (contacts []Contact, err error) {
