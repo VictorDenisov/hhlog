@@ -71,6 +71,8 @@ type Contact struct {
 
 type FieldSetter func(c *Contact, s string)
 
+type FieldSetterConstructor func() FieldSetter
+
 var (
 	FrequencySetter = func(c *Contact, s string) {
 		c.Frequency = Frequency(s)
@@ -125,6 +127,8 @@ type FieldGetter interface {
 	get(c *Contact)
 	accept(v FieldGetterVisitor)
 }
+
+type FieldGetterConstructor func() FieldGetter
 
 type FrequencyGetter struct {
 	val string
