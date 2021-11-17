@@ -93,6 +93,22 @@ var (
 	}
 )
 
+func isTemplateString(line string) bool {
+	verbs := strings.Split(line, "\t")
+	n := len(verbs)
+	templateCount := 0
+	for _, v := range verbs {
+		if _, ok := templateHandlers[v]; ok {
+			templateCount++
+		}
+	}
+	if n > 3 {
+		return n-templateCount <= 2
+	} else {
+		return n-templateCount <= 1
+	}
+}
+
 func parseReadingTemplate(line string) ([]FieldSetter, error) {
 
 	verbs := strings.Split(line, "\t")

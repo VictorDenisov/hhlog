@@ -43,6 +43,11 @@ func TestParseWritingTemplate(t *testing.T) {
 	assert.Equal(t, expectedValues, values)
 }
 
+func TestIsTemplateString(t *testing.T) {
+	input := "%f %err %d %t"
+	assert.True(t, isTemplateString(input))
+}
+
 type ValueVisitor struct {
 	val string
 }
