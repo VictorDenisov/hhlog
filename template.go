@@ -94,6 +94,9 @@ var (
 )
 
 func isTemplateString(line string) bool {
+	if len(line) == 0 {
+		return false
+	}
 	verbs := strings.Split(line, "\t")
 	n := len(verbs)
 	templateCount := 0

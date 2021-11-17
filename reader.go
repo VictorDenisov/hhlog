@@ -16,11 +16,7 @@ func readInputFiles(files StringArray) (cs []Contact, err error) {
 			return cs, err
 		}
 		lineReader := NewLineReader(f)
-		setters, err := readStructure(lineReader)
-		if err != nil {
-			return nil, err
-		}
-		contacts, err := readContacts(lineReader, setters)
+		contacts, err := readContacts(lineReader)
 		if err != nil {
 			return nil, err
 		}
@@ -38,29 +34,41 @@ func readStructure(lr *LineReader) ([]FieldSetter, error) {
 	return parseReadingTemplate(c)
 }
 
-func readContacts(lr *LineReader, setters []FieldSetter) (contacts []Contact, err error) {
+func readContacts(lr *LineReader) (contacts []Contact, err error) {
+	var setters []FieldSetter
 	for {
-		l, _, err := lr.ReadLine()
+		l, c, err := lr.ReadLine()
 		if err == io.EOF {
 			return contacts, nil
 		}
 		if err != nil {
 			return nil, fmt.Errorf("Failed to read line %v: %w", lr.LineNumber(), err)
 		}
-		var fields []string
-		if l != "" {
-			fields = strings.Split(l, "\t")
+		if len(l) == 0 { // Probably new template string
+			if isTemplateString(c) {
+				setters, err = parseReadingTemplate(c)
+				if err != nil {
+					fmt.Fprintf(os.Stderr, "Attempted to parse template from line: %v\n", lr.LineNumber())
+					fmt.Fprintf(os.Stderr, "Failed parsing with error: %v\n", err)
+					fmt.Fprintf(os.Stderr, "Continuing processing with old template.\n")
+				}
+			}
 		} else {
-			continue
+			var fields []string
+			if l != "" {
+				fields = strings.Split(l, "\t")
+			} else {
+				continue
+			}
+			if len(fields) != len(setters) {
+				return nil, fmt.Errorf("Line %v: Wrong number of fields.", lr.LineNumber())
+			}
+			contact := Contact{}
+			for i, f := range fields {
+				setters[i](&contact, f)
+			}
+			contacts = append(contacts, contact)
 		}
-		if len(fields) != len(setters) {
-			return nil, fmt.Errorf("Line %v: Wrong number of fields.", lr.LineNumber())
-		}
-		contact := Contact{}
-		for i, f := range fields {
-			setters[i](&contact, f)
-		}
-		contacts = append(contacts, contact)
 	}
 }
 
