@@ -1,8 +1,10 @@
 package main
 
 import (
+	"errors"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"strings"
 )
 
@@ -24,17 +26,16 @@ type SkccDB struct {
 	callIndex map[string]SkccMember
 }
 
+const (
+	skccCacheFile = ".skcc-cache.html"
+)
+
 func DownloadSkccRoster() *SkccDB {
-	html, err := http.Get("https://www.skccgroup.com/membership_data/membership_roster.php")
+	rs, err := retrieveRoster()
 	if err != nil {
 		return nil
 	}
-	roster, err := ioutil.ReadAll(html.Body)
-	html.Body.Close()
-	if err != nil {
-		return nil
-	}
-	rs := string(roster)
+
 	tableStart := strings.Index(rs, tableTag)
 	tableEnd := strings.Index(rs, tableEndTag)
 	table := rs[tableStart+len(tableTag) : tableEnd]
@@ -51,6 +52,28 @@ func DownloadSkccRoster() *SkccDB {
 		members = append(members, ParseLine(line))
 	}
 	return &SkccDB{members, buildCallIndex(members)}
+}
+
+func retrieveRoster() (string, error) {
+	file, err := os.Open(skccCacheFile)
+	if errors.Is(err, os.ErrNotExist) {
+		html, err := http.Get("https://www.skccgroup.com/membership_data/membership_roster.php")
+		if err != nil {
+			return "", nil
+		}
+		roster, err := ioutil.ReadAll(html.Body)
+		html.Body.Close()
+		if err != nil {
+			return "", nil
+		}
+		ioutil.WriteFile(skccCacheFile, roster, 0666)
+		return string(roster), nil
+	}
+	if err != nil {
+		return "", err
+	}
+	roster, err := ioutil.ReadAll(file)
+	return string(roster), nil
 }
 
 func buildCallIndex(members []SkccMember) (res map[string]SkccMember) {
