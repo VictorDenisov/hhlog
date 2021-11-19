@@ -9,6 +9,7 @@ import (
 const (
 	ADIF     = "adi"
 	CABRILLO = "cbr"
+	HHLOG    = "hhl"
 )
 
 func main() {
@@ -18,16 +19,10 @@ func main() {
 		template  string
 	)
 
-	flag.StringVar(&outFormat, "out", "", "Output format")
+	flag.StringVar(&outFormat, "out", "", fmt.Sprintf("Output format: %v, %v, %v", ADIF, CABRILLO, HHLOG))
 	flag.StringVar(&template, "tpl", "", `Output template.
 
-%f - frequency in megahertz
-%c - call sign
-%d - eight digits of date: year month day
-%t - four digits of UTC time
-%b - band. Only used in output template
-%m - mode
-`)
+`+templateDoc())
 	flag.Var(&inFile, "in", "Input file")
 	flag.Parse()
 

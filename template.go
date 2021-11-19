@@ -25,6 +25,7 @@ const (
 type FieldHandlers struct {
 	setter FieldSetterConstructor
 	getter FieldGetterConstructor
+	doc    string
 }
 
 var (
@@ -33,65 +34,86 @@ var (
 		FREQUENCY: FieldHandlers{
 			func() FieldSetter { return FrequencySetter },
 			func() FieldGetter { return &FrequencyGetter{} },
+			fmt.Sprintf("%v\t- frequency in megahertz", FREQUENCY),
 		},
 		CALL: FieldHandlers{
 			func() FieldSetter { return CallSetter },
 			func() FieldGetter { return &CallGetter{} },
+			fmt.Sprintf("%v\t- call sign", CALL),
 		},
 		DATE: FieldHandlers{
 			func() FieldSetter { return DateSetter },
 			func() FieldGetter { return &DateGetter{} },
+			fmt.Sprintf("%v\t- eight digits of date without spaces: year month day", DATE),
 		},
 		TIME: FieldHandlers{
 			func() FieldSetter { return TimeSetter },
 			func() FieldGetter { return &TimeGetter{} },
+			fmt.Sprintf("%v\t- four digits of UTC time", TIME),
 		},
 		MODE: FieldHandlers{
 			func() FieldSetter { return ModeSetter },
 			func() FieldGetter { return &ModeGetter{} },
+			fmt.Sprintf("%v\t- band", BAND),
 		},
 		BAND: FieldHandlers{
 			//func() FieldSetter { return BandSetter },
 			nil,
 			func() FieldGetter { return &BandGetter{} },
+			fmt.Sprintf("%v\t- band", MODE),
 		},
 		SKCC: FieldHandlers{
 			nil,
 			//func() FieldSetter { return ModeSetter },
 			func() FieldGetter { return &SkccGetter{skccDb, ""} },
+			fmt.Sprintf("%v\t- skcc number", SKCC),
 		},
 		NAME: FieldHandlers{
 			nil,
 			//func() FieldSetter { return ModeSetter },
 			func() FieldGetter { return &NameGetter{skccDb, ""} },
+			fmt.Sprintf("%v\t- the contacted station's operator name", NAME),
 		},
 		SPC: FieldHandlers{
 			nil,
 			//func() FieldSetter { return ModeSetter },
 			func() FieldGetter { return &SpcGetter{skccDb, ""} },
+			fmt.Sprintf("%v\t- skcc spc", SPC),
 		},
 		SRX: FieldHandlers{
 			func() FieldSetter { return SrxSetter },
 			func() FieldGetter { return &SrxGetter{} },
+			fmt.Sprintf("%v\t- contest QSO received serial number with a value greater than or equal to 0", SRX),
 		},
 		STX: FieldHandlers{
 			func() FieldSetter { return StxSetter },
 			func() FieldGetter { return &StxGetter{} },
+			fmt.Sprintf("%v\t- contest QSO transmitted serial number with a value greater than or equal to 0", STX),
 		},
 		PREC: FieldHandlers{
 			func() FieldSetter { return PrecSetter },
 			func() FieldGetter { return &PrecGetter{} },
+			fmt.Sprintf("%v\t- contest precedence", PREC),
 		},
 		CK: FieldHandlers{
 			func() FieldSetter { return CkSetter },
 			func() FieldGetter { return &CkGetter{} },
+			fmt.Sprintf("%v\t- contest check", CK),
 		},
 		SECT: FieldHandlers{
 			func() FieldSetter { return SectSetter },
 			func() FieldGetter { return &SectGetter{} },
+			fmt.Sprintf("%v\t- the contacted station's ARRL section", SECT),
 		},
 	}
 )
+
+func templateDoc() (res string) {
+	for _, h := range templateHandlers {
+		res += h.doc + "\n"
+	}
+	return
+}
 
 func isTemplateString(line string) bool {
 	if len(line) == 0 {
