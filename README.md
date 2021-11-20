@@ -62,8 +62,19 @@ The input files can have extension hhl. They are plain text files and you can
 check them into a git repo(github or bitbucket). Text files are convenient to be
 inspected without any extra app.
 
-Currently only adi output format is supported, but there are plans to introduce
-cabrillo files.
+Currently two output types are supported: adi and cbr.
 
 Logs can be stored as plain files in hhl format and then converted to adi or cbr
 as necessary.
+
+The format of hhl file can be changed in the middle of the file by adding
+another comment line that contains only tab separated field flags.
+
+How to Organize Logs
+--------------------
+
+A recommended way for keeping your log would be to store hhl files in a
+hierarchy of directories. The whole hierarchy can be stored in a version
+control system. When a file or a set of files needs to be exported to LOTW or
+cabrillo files you can convert hhl files to the required format. You only keep
+hhl files that are just plain text files.
