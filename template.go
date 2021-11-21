@@ -121,16 +121,16 @@ func isTemplateString(line string) bool {
 	}
 	verbs := strings.Split(line, "\t")
 	n := len(verbs)
-	templateCount := 0
+	verbCount := 0
 	for _, v := range verbs {
 		if _, ok := templateHandlers[v]; ok {
-			templateCount++
+			verbCount++
 		}
 	}
 	if n > 3 {
-		return n-templateCount <= 2
+		return n-verbCount <= 2
 	} else {
-		return n-templateCount <= 1
+		return n-verbCount <= 1
 	}
 }
 
