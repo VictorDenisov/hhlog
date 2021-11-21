@@ -119,10 +119,10 @@ func isTemplateString(line string) bool {
 	if len(line) == 0 {
 		return false
 	}
-	verbs := strings.Split(line, "\t")
-	n := len(verbs)
+	tokens := strings.Split(line, "\t")
+	n := len(tokens)
 	verbCount := 0
-	for _, v := range verbs {
+	for _, v := range tokens {
 		if _, ok := templateHandlers[v]; ok {
 			verbCount++
 		}
