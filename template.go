@@ -130,7 +130,7 @@ func isTemplateString(line string) bool {
 	if n > 3 {
 		return n-verbCount <= 2
 	} else {
-		return n-verbCount <= 1
+		return false
 	}
 }
 
