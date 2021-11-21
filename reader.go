@@ -55,11 +55,7 @@ func readContacts(lr *LineReader) (contacts []Contact, err error) {
 			}
 		} else {
 			var fields []string
-			if l != "" {
-				fields = strings.Split(l, "\t")
-			} else {
-				continue
-			}
+			fields = strings.Split(l, "\t")
 			if len(fields) != len(setters) {
 				return nil, fmt.Errorf("Line %v: Wrong number of fields.", lr.LineNumber())
 			}

@@ -16,6 +16,7 @@ type Stx string
 type Prec string
 type Ck string
 type Sect string
+type Spc string
 
 func (t Time) Valid() error {
 	if len(t) != 4 {
@@ -238,7 +239,7 @@ func (g *NameGetter) accept(v FieldGetterVisitor) {
 
 type SpcGetter struct {
 	db  *SkccDB
-	val string
+	val Spc
 }
 
 func (g *SpcGetter) get(c *Contact) {

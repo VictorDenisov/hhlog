@@ -13,7 +13,7 @@ type SkccMember struct {
 	Call string
 	Name string
 	City string
-	Spc  string
+	Spc  Spc
 }
 
 const (
@@ -113,7 +113,7 @@ func ParseLine(s string) (res SkccMember) {
 	res.Call = strings.ToLower(tr.ReadTag())
 	res.Name = tr.ReadTag()
 	res.City = tr.ReadTag()
-	res.Spc = tr.ReadTag()
+	res.Spc = Spc(tr.ReadTag())
 	return res
 }
 

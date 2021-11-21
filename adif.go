@@ -75,7 +75,7 @@ func (v *AdifFieldPrinter) visitName(g *NameGetter) {
 
 func (v *AdifFieldPrinter) visitSpc(g *SpcGetter) {
 	v.field = "SPC"
-	v.val = g.val
+	v.val = string(g.val)
 }
 
 func (v *AdifFieldPrinter) visitSrx(g *SrxGetter) {

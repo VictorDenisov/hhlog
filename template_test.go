@@ -44,7 +44,12 @@ func TestParseWritingTemplate(t *testing.T) {
 }
 
 func TestIsTemplateString(t *testing.T) {
-	input := "%f %err %d %t"
+	input := "%f\t%err\t%d\t%t"
+	assert.True(t, isTemplateString(input))
+}
+
+func TestIsTemplateStringCallTime(t *testing.T) {
+	input := "%c\t%t"
 	assert.True(t, isTemplateString(input))
 }
 
@@ -85,7 +90,7 @@ func (v *ValueVisitor) visitName(g *NameGetter) {
 }
 
 func (v *ValueVisitor) visitSpc(g *SpcGetter) {
-	v.val = g.val
+	v.val = string(g.val)
 }
 
 func (v *ValueVisitor) visitSrx(g *SrxGetter) {

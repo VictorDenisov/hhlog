@@ -32,27 +32,17 @@ func TestReadStructure(t *testing.T) {
 }
 
 func TestReadContacts(t *testing.T) {
-	template := "\" %c\t%t\n"
-	inputReader := NewLineReader(strings.NewReader(template))
-	setters, e := readStructure(inputReader)
-	assert.Nil(t, e)
-
-	input := "q1bro\t1020\n"
-	inputReader = NewLineReader(strings.NewReader(input))
-	cs, e := readContacts(inputReader, setters)
+	input := "\" %c\t%t\nq1bro\t1020\n"
+	inputReader := NewLineReader(strings.NewReader(input))
+	cs, e := readContacts(inputReader)
 	assert.Nil(t, e)
 	assert.Equal(t, []Contact{Contact{Call: Call("q1bro"), Time: Time("1020")}}, cs)
 }
 
 func TestReadContactsWithComment(t *testing.T) {
-	template := "\" %c\t%t\n"
-	inputReader := NewLineReader(strings.NewReader(template))
-	setters, e := readStructure(inputReader)
-	assert.Nil(t, e)
-
-	input := "q1bro\t1020 \" text in the comment \n"
-	inputReader = NewLineReader(strings.NewReader(input))
-	cs, e := readContacts(inputReader, setters)
+	input := "\" %c\t%t\nq1bro\t1020 \" text in the comment \n"
+	inputReader := NewLineReader(strings.NewReader(input))
+	cs, e := readContacts(inputReader)
 	assert.Nil(t, e)
 	assert.Equal(t, []Contact{Contact{Call: Call("q1bro"), Time: Time("1020")}}, cs)
 }

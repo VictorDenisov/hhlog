@@ -17,6 +17,7 @@ func main() {
 		outFormat string
 		inFile    StringArray
 		template  string
+		filter    string
 	)
 
 	flag.StringVar(&outFormat, "out", "", fmt.Sprintf("Output format: %v, %v, %v", ADIF, CABRILLO, HHLOG))
@@ -24,6 +25,7 @@ func main() {
 
 `+templateDoc())
 	flag.Var(&inFile, "in", "Input file")
+	flag.StringVar(&filter, "filter", "", "Filter for QSOs")
 	flag.Parse()
 
 	contacts, err := readInputFiles(inFile)
