@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"io/ioutil"
 	"os"
 )
 
@@ -27,6 +28,23 @@ func main() {
 	flag.Var(&inFile, "in", "Input file")
 	flag.StringVar(&filter, "filter", "", "Filter for QSOs")
 	flag.Parse()
+
+	var config *Config
+	data, err := ioutil.ReadFile(".hhlog.conf")
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Failed to parse config file:\n")
+		fmt.Fprintf(os.Stderr, "%v\n", err)
+		fmt.Fprintf(os.Stderr, "Proceeding without config file.\n")
+	} else {
+		config, err = readConfig(data)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Failed to parse config file:\n")
+			fmt.Fprintf(os.Stderr, "%v\n", err)
+			fmt.Fprintf(os.Stderr, "Proceeding without config file.\n")
+			config = nil
+		}
+		fmt.Printf("Parsed config: %v\n", config)
+	}
 
 	contacts, err := readInputFiles(inFile)
 	if err != nil {

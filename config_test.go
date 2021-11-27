@@ -7,10 +7,6 @@ import (
 )
 
 func TestReadConfig(t *testing.T) {
-	//data, err := ioutil.ReadFile(".hhlog.conf")
-	//if err != nil {
-	//	return nil, err
-	//}
 	data := `
 station:
     call: t6tst
