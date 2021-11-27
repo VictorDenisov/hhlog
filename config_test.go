@@ -12,6 +12,8 @@ func TestReadConfig(t *testing.T) {
 	//	return nil, err
 	//}
 	data := `
+station:
+    call: t6tst
 pota:
     name: PotaName
     email: PotaMail

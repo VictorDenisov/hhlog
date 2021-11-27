@@ -5,8 +5,13 @@ import (
 )
 
 type Config struct {
-	Pota Pota `json:"pota"`
-	Wwff Wwff `json:"wwff"`
+	Station Station `yaml:"station"`
+	Pota    Pota    `yaml:"pota"`
+	Wwff    Wwff    `yaml:"wwff"`
+}
+
+type Station struct {
+	Call string `yaml:"call"`
 }
 
 type Pota struct {
