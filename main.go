@@ -65,6 +65,10 @@ The name of the input file should have the following structure: <CALLSIGN>@<PARK
 		return
 	}
 
+	if sendPota {
+		submitPotaReport(inFile, contacts, config)
+	}
+
 	getters, err := parseWritingTemplate(template)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Failed to parse writing template: %v\n", err)
