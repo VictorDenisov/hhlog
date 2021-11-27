@@ -19,6 +19,7 @@ func main() {
 		inFile    StringArray
 		template  string
 		filter    string
+		sendPota  bool
 	)
 
 	flag.StringVar(&outFormat, "out", "", fmt.Sprintf("Output format: %v, %v, %v", ADIF, CABRILLO, HHLOG))
@@ -27,6 +28,11 @@ func main() {
 `+templateDoc())
 	flag.Var(&inFile, "in", "Input file")
 	flag.StringVar(&filter, "filter", "", "Filter for QSOs")
+	flag.BoolVar(&sendPota, "send-pota", false, `This flag will take the input and convert it into a file suitable for pota and wwff.
+
+If pota section is configured in the config file it will send it to the pota coordinator. If the wwff section is configured it will also send it to wwff coordinator.
+
+The name of the input file should have the following structure: <CALLSIGN>@<PARK>-DATE.hhl. <PARK> can be either K-<number> or KFF-<number>. The app will choose the right prefix for the submission.`)
 	flag.Parse()
 
 	var config *Config
