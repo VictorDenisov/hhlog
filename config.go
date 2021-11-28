@@ -12,6 +12,7 @@ type Config struct {
 
 type Station struct {
 	Call string `yaml:"call"`
+	Mail Mail   `yaml:"mail"`
 }
 
 type Pota struct {
@@ -22,6 +23,13 @@ type Pota struct {
 type Wwff struct {
 	ContactName  string `yaml:"name"`
 	ContactEmail string `yaml:"email"`
+}
+
+type Mail struct {
+	SmtpHost string `yaml:"smtp-host"`
+	Port     int    `yaml:"port"`
+	Password string `yaml:"password"`
+	Email    string `yaml:"email"`
 }
 
 func readConfig(data []byte) (*Config, error) {

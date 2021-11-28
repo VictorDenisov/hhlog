@@ -10,6 +10,11 @@ func TestReadConfig(t *testing.T) {
 	data := `
 station:
     call: t6tst
+    mail:
+        smtp-host: smtp.gmail.com
+        port: 587
+        password: sample-password
+        email: test@gmail.com
 pota:
     name: PotaName
     email: PotaMail
