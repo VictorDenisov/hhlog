@@ -21,6 +21,12 @@ There are plans to add command line interface to this logger for logging during
 contests. Again no jumping between text fields is expected. Type in only the
 values that you have separated by space or tab and the logger will do the rest.
 
+Contacts
+========
+
+https://groups.io/g/hhlog - group on groups.io for hhlog realted communications.
+New features are announced in this group.
+
 Usage
 =====
 
