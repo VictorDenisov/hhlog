@@ -49,7 +49,6 @@ The name of the input file should have the following structure: <CALLSIGN>@<PARK
 			fmt.Fprintf(os.Stderr, "Proceeding without config file.\n")
 			config = nil
 		}
-		fmt.Printf("Parsed config: %v\n", config)
 	}
 
 	contacts, err := readInputFiles(inFile)
@@ -67,6 +66,7 @@ The name of the input file should have the following structure: <CALLSIGN>@<PARK
 
 	if sendPota {
 		submitPotaReport(inFile, contacts, config)
+		return
 	}
 
 	getters, err := parseWritingTemplate(template)
