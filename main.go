@@ -77,7 +77,7 @@ The name of the input file should have the following structure: <CALLSIGN>@<PARK
 
 	switch outFormat {
 	case ADIF:
-		renderAdif(getters, contacts)
+		renderAdif(os.Stdout, getters, contacts)
 	case CABRILLO:
 		renderCabrillo(getters, contacts)
 	default:

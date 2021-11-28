@@ -2,13 +2,14 @@ package main
 
 import (
 	"fmt"
+	"os"
 )
 
-func renderAdif(getters []FieldGetter, contacts []Contact) {
-	fmt.Printf("<adif_ver:5>3.1.2\n")
-	fmt.Printf("<programid:5>hhlog\n")
-	fmt.Printf("<programversion:5>0.0.1\n")
-	fmt.Printf("<EOH>\n")
+func renderAdif(f *os.File, getters []FieldGetter, contacts []Contact) {
+	fmt.Fprintf(f, "<adif_ver:5>3.1.2\n")
+	fmt.Fprintf(f, "<programid:5>hhlog\n")
+	fmt.Fprintf(f, "<programversion:5>0.0.1\n")
+	fmt.Fprintf(f, "<EOH>\n")
 
 	for _, c := range contacts {
 		for i, g := range getters {
@@ -16,11 +17,11 @@ func renderAdif(getters []FieldGetter, contacts []Contact) {
 			g.get(&c)
 			g.accept(fp)
 			if i > 0 {
-				fmt.Printf("    ")
+				fmt.Fprintf(f, "    ")
 			}
-			fp.printField()
+			fp.printField(f)
 		}
-		fmt.Printf("<EOR>\n")
+		fmt.Fprintf(f, "<EOR>\n")
 	}
 }
 
@@ -29,8 +30,8 @@ type AdifFieldPrinter struct {
 	val   string
 }
 
-func (v *AdifFieldPrinter) printField() {
-	fmt.Printf("<%v:%v>%v\n", v.field, len(v.val), v.val)
+func (v *AdifFieldPrinter) printField(f *os.File) {
+	fmt.Fprintf(f, "<%v:%v>%v\n", v.field, len(v.val), v.val)
 }
 
 func (v *AdifFieldPrinter) visitFrequency(g *FrequencyGetter) {
