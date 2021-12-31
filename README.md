@@ -76,6 +76,16 @@ as necessary.
 The format of hhl file can be changed in the middle of the file by adding
 another comment line that contains only tab separated field flags.
 
+Submitting POTA Reports
+-----------------------
+
+This logger simplifies submitting your logs to POTA and WWFF coordinators.
+References from both programs are similar and have the same numbers up to 4446.
+Instead of sending two emails to the coordinators you can instruct hhlog to
+submit one logs separately formatted for POTA and WWFF coordinator.
+
+Create .hhlog.conf file
+
 How to Organize Logs
 --------------------
 
