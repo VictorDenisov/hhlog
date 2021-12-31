@@ -1,6 +1,6 @@
 module github.com/VictorDenisov/hhlog
 
-go 1.14
+go 1.17
 
 require (
 	github.com/stretchr/testify v1.7.0
