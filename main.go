@@ -80,6 +80,8 @@ The name of the input file should have the following structure: <CALLSIGN>@<PARK
 		renderAdif(os.Stdout, getters, contacts)
 	case CABRILLO:
 		renderCabrillo(getters, contacts)
+	case HHLOG:
+		renderHhlog(os.Stdout, getters, contacts)
 	default:
 		fmt.Fprintf(os.Stderr, "Unknown output format: %v\n", outFormat)
 		fmt.Fprintf(os.Stderr, "Allowed formats are: %v, %v\n", ADIF, CABRILLO)
