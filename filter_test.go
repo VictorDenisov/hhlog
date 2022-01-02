@@ -16,6 +16,24 @@ func TestParseExpr(t *testing.T) {
 	assert.True(t, r)
 }
 
+func TestParseExprLess(t *testing.T) {
+	expr, err := ParseExpr("%d <= 20211220")
+	assert.Nil(t, err)
+	r := expr.run(&Contact{
+		Date: "20211219",
+	})
+	assert.True(t, r)
+}
+
+func TestParseExprMore(t *testing.T) {
+	expr, err := ParseExpr("%d >= 20211220")
+	assert.Nil(t, err)
+	r := expr.run(&Contact{
+		Date: "20211221",
+	})
+	assert.True(t, r)
+}
+
 func TestParseExprNotEqual(t *testing.T) {
 	expr, err := ParseExpr("%c == q6qtx")
 	assert.Nil(t, err)

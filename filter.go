@@ -19,22 +19,54 @@ func ParseFilter(s string) (Filter, error) {
 	return and, nil
 }
 
+var (
+	flipSign = map[string]string{
+		"==": "==",
+		"<=": ">=",
+		">=": "<=",
+	}
+)
+
 func ParseExpr(s string) (Filter, error) {
 	pos := strings.Index(s, "==")
-	if pos < 0 {
-		return nil, fmt.Errorf("Only == operator is supported")
+	sign := "=="
+	if pos >= 0 {
+		goto found
 	}
+	pos = strings.Index(s, "<=")
+	if pos >= 0 {
+		sign = "<="
+		goto found
+	}
+	pos = strings.Index(s, ">=")
+	if pos >= 0 {
+		sign = ">="
+		goto found
+	}
+	const errorMessage = "Only ==, <=, >= operators are supported"
+	return nil, fmt.Errorf(errorMessage)
+found:
 	ops := make([]string, 2)
 	ops[0] = strings.TrimSpace(s[0:pos])
 	ops[1] = strings.TrimSpace(s[pos+2 : len(s)])
 	if ops[1][0] == '%' {
 		ops[0], ops[1] = ops[1], ops[0]
+		sign = flipSign[sign]
 	}
 	templateHandler, ok := templateHandlers[ops[0]]
 	if !ok {
 		return nil, fmt.Errorf("Unknown flag in the filter: %v", ops[0])
 	}
-	return &Eq{templateHandler.getter(), ops[1]}, nil
+	switch sign {
+	case "==":
+		return &Eq{templateHandler.getter(), ops[1]}, nil
+	case "<=":
+		return &EqLess{templateHandler.getter(), ops[1]}, nil
+	case ">=":
+		return &EqMore{templateHandler.getter(), ops[1]}, nil
+	}
+	return nil, fmt.Errorf(errorMessage)
+
 }
 
 type Filter interface {
@@ -68,4 +100,32 @@ func (e *Eq) run(c *Contact) bool {
 	vv := &ValueVisitor{}
 	e.fieldGetter.accept(vv)
 	return vv.val == e.value
+}
+
+type EqLess struct {
+	fieldGetter FieldGetter
+	value       string
+}
+
+var _ Filter = &EqLess{}
+
+func (e *EqLess) run(c *Contact) bool {
+	e.fieldGetter.get(c)
+	vv := &ValueVisitor{}
+	e.fieldGetter.accept(vv)
+	return vv.val <= e.value
+}
+
+type EqMore struct {
+	fieldGetter FieldGetter
+	value       string
+}
+
+var _ Filter = &EqMore{}
+
+func (e *EqMore) run(c *Contact) bool {
+	e.fieldGetter.get(c)
+	vv := &ValueVisitor{}
+	e.fieldGetter.accept(vv)
+	return vv.val >= e.value
 }
