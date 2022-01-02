@@ -161,3 +161,63 @@ func parseWritingTemplate(line string) ([]FieldGetter, error) {
 	}
 	return getters, nil
 }
+
+type ValueVisitor struct {
+	val string
+}
+
+func (v *ValueVisitor) visitFrequency(g *FrequencyGetter) {
+	v.val = g.val
+}
+
+func (v *ValueVisitor) visitCall(g *CallGetter) {
+	v.val = g.val
+}
+
+func (v *ValueVisitor) visitDate(g *DateGetter) {
+	v.val = g.val
+}
+
+func (v *ValueVisitor) visitTime(g *TimeGetter) {
+	v.val = g.val
+}
+
+func (v *ValueVisitor) visitMode(g *ModeGetter) {
+	v.val = g.val
+}
+
+func (v *ValueVisitor) visitBand(g *BandGetter) {
+	v.val = g.val
+}
+
+func (v *ValueVisitor) visitSkcc(g *SkccGetter) {
+	v.val = g.val
+}
+
+func (v *ValueVisitor) visitName(g *NameGetter) {
+	v.val = g.val
+}
+
+func (v *ValueVisitor) visitSpc(g *SpcGetter) {
+	v.val = string(g.val)
+}
+
+func (v *ValueVisitor) visitSrx(g *SrxGetter) {
+	v.val = string(g.val)
+}
+
+func (v *ValueVisitor) visitStx(g *StxGetter) {
+	v.val = string(g.val)
+}
+
+func (v *ValueVisitor) visitPrec(g *PrecGetter) {
+	v.val = string(g.val)
+}
+
+func (v *ValueVisitor) visitCk(g *CkGetter) {
+	v.val = string(g.val)
+}
+
+func (v *ValueVisitor) visitSect(g *SectGetter) {
+	v.val = string(g.val)
+}
