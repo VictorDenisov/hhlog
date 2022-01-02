@@ -34,6 +34,12 @@ If pota section is configured in the config file it will send it to the pota coo
 
 The name of the input file should have the following structure: <CALLSIGN>@<PARK>-DATE.hhl. <PARK> can be either K-<number> or KFF-<number>. The app will choose the right prefix for the submission.`)
 	flag.Parse()
+	filterExpr, err := ParseFilter(filter)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Failed to parse filter expression.")
+		fmt.Fprintf(os.Stderr, "%v\n", err)
+		os.Exit(1)
+	}
 
 	var config *Config
 	data, err := ioutil.ReadFile(".hhlog.conf")
@@ -51,11 +57,17 @@ The name of the input file should have the following structure: <CALLSIGN>@<PARK
 		}
 	}
 
-	contacts, err := readInputFiles(inFile)
+	rawContacts, err := readInputFiles(inFile)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Failed to read input files:\n")
 		fmt.Fprintf(os.Stderr, "%v\n", err)
 		os.Exit(1)
+	}
+	contacts := make([]Contact, 0)
+	for _, c := range rawContacts {
+		if filterExpr.run(&c) {
+			contacts = append(contacts, c)
+		}
 	}
 
 	if len(contacts) == 0 {
