@@ -6,6 +6,9 @@ import (
 )
 
 func ParseFilter(s string) (Filter, error) {
+	if len(strings.TrimSpace(s)) == 0 {
+		return &True{}, nil
+	}
 	// TODO implement proper syntax tree parsing
 	var err error
 	exprs := strings.Split(s, "&&")
@@ -128,4 +131,13 @@ func (e *EqMore) run(c *Contact) bool {
 	vv := &ValueVisitor{}
 	e.fieldGetter.accept(vv)
 	return vv.val >= e.value
+}
+
+type True struct {
+}
+
+var _ Filter = &True{}
+
+func (t *True) run(c *Contact) bool {
+	return true
 }
