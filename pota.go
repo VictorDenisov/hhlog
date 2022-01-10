@@ -8,9 +8,12 @@ import (
 	"gopkg.in/gomail.v2"
 )
 
-func submitPotaReport(inFile []string, contacts []Contact, config *Config) error {
+func submitPotaReport(inFile []string, contacts []Contact, config *Config, parkName string) error {
 	if len(inFile) != 1 {
 		return fmt.Errorf("Submit-pota command requires exactly one input file.")
+	}
+	if len(parkName) == 0 {
+		return fmt.Errorf("Park name is required for pota submissions.")
 	}
 	getters, err := parseWritingTemplate("%c %b %m %d %t %f")
 	if err != nil {
@@ -37,7 +40,7 @@ func submitPotaReport(inFile []string, contacts []Contact, config *Config) error
 		m := gomail.NewMessage()
 		m.SetHeader("From", config.Station.Mail.Email)
 		m.SetHeader("To", config.Pota.ContactEmail)
-		m.SetHeader("Subject", fmt.Sprintf("%v K-%v", callSign, parkCode))
+		m.SetHeader("Subject", fmt.Sprintf("%v K-%v %s", callSign, parkCode, parkName))
 		m.SetBody("text/plain", fmt.Sprintf("Hello %s,\n\nHere is my log for K-%v on %v.\n\nThanks, Victor.", config.Pota.ContactName, parkCode, date))
 		m.Attach(potaFileName)
 
@@ -49,7 +52,7 @@ func submitPotaReport(inFile []string, contacts []Contact, config *Config) error
 		m := gomail.NewMessage()
 		m.SetHeader("From", config.Station.Mail.Email)
 		m.SetHeader("To", config.Wwff.ContactEmail)
-		m.SetHeader("Subject", fmt.Sprintf("%v KFF-%v", callSign, parkCode))
+		m.SetHeader("Subject", fmt.Sprintf("%v KFF-%v %s", callSign, parkCode, parkName))
 		m.SetBody("text/plain", fmt.Sprintf("Hello %s,\n\nHere is my log for KFF-%v on %v.\n\nThanks, Victor.", config.Wwff.ContactName, parkCode, date))
 		m.Attach(potaFileName, gomail.Rename(wwffFileName))
 

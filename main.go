@@ -18,6 +18,7 @@ func main() {
 		inFile    StringArray
 		template  string
 		filter    string
+		parkName  string
 		sendPota  bool
 	)
 
@@ -32,6 +33,7 @@ func main() {
 If pota section is configured in the config file it will send it to the pota coordinator. If the wwff section is configured it will also send it to wwff coordinator.
 
 The name of the input file should have the following structure: <CALLSIGN>@<PARK>-DATE.hhl. <PARK> can be either K-<number> or KFF-<number>. The app will choose the right prefix for the submission.`)
+	flag.StringVar(&parkName, "park-name", "", "Park name for pota submission")
 	flag.Parse()
 	filterExpr, err := ParseFilter(filter)
 	if err != nil {
@@ -62,7 +64,7 @@ The name of the input file should have the following structure: <CALLSIGN>@<PARK
 	}
 
 	if sendPota {
-		submitPotaReport(inFile, contacts, config)
+		submitPotaReport(inFile, contacts, config, parkName)
 		return
 	}
 
