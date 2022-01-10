@@ -2,9 +2,11 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
+	"path/filepath"
 	"strings"
 )
 
@@ -27,7 +29,7 @@ type SkccDB struct {
 }
 
 const (
-	skccCacheFile = ".skcc-cache.html"
+	skccCacheFile = "skcc-cache.html"
 )
 
 func DownloadSkccRoster() *SkccDB {
@@ -55,7 +57,24 @@ func DownloadSkccRoster() *SkccDB {
 }
 
 func retrieveRoster() (string, error) {
-	file, err := os.Open(skccCacheFile)
+	skccCachePath := "." + skccCacheFile
+	userHomeDir, err := os.UserHomeDir()
+	if err == nil {
+		configPath := filepath.Join(userHomeDir, configDir)
+
+		err = ensureConfigPathExists(configPath)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Failed to create config path: %v\n", err)
+			fmt.Fprintf(os.Stderr, "Using current directory for cache")
+		} else {
+			skccCachePath = filepath.Join(configPath, skccCacheFile)
+		}
+	} else {
+		fmt.Fprintf(os.Stderr, "Failed to determine home directory: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Using current directory for cache")
+	}
+
+	file, err := os.Open(skccCachePath)
 	if errors.Is(err, os.ErrNotExist) {
 		html, err := http.Get("https://www.skccgroup.com/membership_data/membership_roster.php")
 		if err != nil {
@@ -66,7 +85,7 @@ func retrieveRoster() (string, error) {
 		if err != nil {
 			return "", nil
 		}
-		ioutil.WriteFile(skccCacheFile, roster, 0666)
+		ioutil.WriteFile(skccCachePath, roster, 0666)
 		return string(roster), nil
 	}
 	if err != nil {
@@ -136,4 +155,15 @@ func StripHtmlComments(s string) (res string) {
 		res = res[:start] + res[end+len(closeTag):]
 	}
 	return
+}
+
+func ensureConfigPathExists(configPath string) error {
+	_, err := os.Stat(configPath)
+	if os.IsNotExist(err) {
+		err = os.Mkdir(configPath, 0755)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
