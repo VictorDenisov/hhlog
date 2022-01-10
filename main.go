@@ -48,7 +48,7 @@ The name of the input file should have the following structure: <CALLSIGN>@<PARK
 		fmt.Fprintf(os.Stderr, "%v\n", err)
 		fmt.Fprintf(os.Stderr, "Proceeding without config file.\n")
 	} else {
-		config, err = readConfig(data)
+		config, err = parseConfig(data)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "Failed to parse config file:\n")
 			fmt.Fprintf(os.Stderr, "%v\n", err)

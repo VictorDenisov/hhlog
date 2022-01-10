@@ -32,7 +32,7 @@ type Mail struct {
 	Email    string `yaml:"email"`
 }
 
-func readConfig(data []byte) (*Config, error) {
+func parseConfig(data []byte) (*Config, error) {
 	config := &Config{}
 	err := yaml.Unmarshal(data, &config)
 	if err != nil {
