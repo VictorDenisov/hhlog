@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"os"
 )
 
@@ -41,21 +40,7 @@ The name of the input file should have the following structure: <CALLSIGN>@<PARK
 		os.Exit(1)
 	}
 
-	var config *Config
-	data, err := ioutil.ReadFile(".hhlog.conf")
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Failed to parse config file:\n")
-		fmt.Fprintf(os.Stderr, "%v\n", err)
-		fmt.Fprintf(os.Stderr, "Proceeding without config file.\n")
-	} else {
-		config, err = parseConfig(data)
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "Failed to parse config file:\n")
-			fmt.Fprintf(os.Stderr, "%v\n", err)
-			fmt.Fprintf(os.Stderr, "Proceeding without config file.\n")
-			config = nil
-		}
-	}
+	config := readConfig()
 
 	rawContacts, err := readInputFiles(inFile)
 	if err != nil {
