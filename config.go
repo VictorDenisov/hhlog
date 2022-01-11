@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 
 	"gopkg.in/yaml.v2"
 )
@@ -55,7 +56,7 @@ func readConfig() (config *Config) {
 		fmt.Fprintf(os.Stderr, "Trying config file in the working directory\n")
 		goto workingDir
 	}
-	data, err = ioutil.ReadFile(userHomeDir + "/" + configDir + "/hhlog.conf")
+	data, err = ioutil.ReadFile(filepath.Join(userHomeDir, configDir, "hhlog.conf"))
 	if err == nil {
 		goto parse
 	}

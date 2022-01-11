@@ -108,6 +108,21 @@ var (
 			func() FieldGetter { return &SectGetter{} },
 			fmt.Sprintf("%v\t- the contacted station's ARRL section", SECT),
 		},
+		RST_RCVD: FieldHandlers{
+			func() FieldSetter { return RstRcvdSetter },
+			func() FieldGetter { return &RstRcvdGetter{} },
+			fmt.Sprintf("%v\t- signal report from the contacted station", RST_RCVD),
+		},
+		RST_SENT: FieldHandlers{
+			func() FieldSetter { return RstSentSetter },
+			func() FieldGetter { return &RstSentGetter{} },
+			fmt.Sprintf("%v\t- signal report sent to the contacted station", RST_SENT),
+		},
+		STATE: FieldHandlers{
+			func() FieldSetter { return StateSetter },
+			func() FieldGetter { return &StateGetter{} },
+			fmt.Sprintf("%v\t- the code for the contacted station's Primary Administrative Subdivision (e.g. US State, JA Island, VE Province)", STATE),
+		},
 	}
 )
 
