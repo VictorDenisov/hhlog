@@ -20,6 +20,9 @@ const (
 	PREC      = "%prec"
 	CK        = "%ck"
 	SECT      = "%sect"
+	RST_RCVD  = "%rst_rcvd"
+	RST_SENT  = "%rst_sent"
+	STATE     = "%state"
 )
 
 type FieldHandlers struct {
@@ -219,5 +222,17 @@ func (v *ValueVisitor) visitCk(g *CkGetter) {
 }
 
 func (v *ValueVisitor) visitSect(g *SectGetter) {
+	v.val = string(g.val)
+}
+
+func (v *ValueVisitor) visitRstRcvd(g *RstRcvdGetter) {
+	v.val = string(g.val)
+}
+
+func (v *ValueVisitor) visitRstSent(g *RstSentGetter) {
+	v.val = string(g.val)
+}
+
+func (v *ValueVisitor) visitState(g *StateGetter) {
 	v.val = string(g.val)
 }

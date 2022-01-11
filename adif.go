@@ -103,3 +103,18 @@ func (v *AdifFieldPrinter) visitSect(g *SectGetter) {
 	v.field = "ARRL_SECT"
 	v.val = string(g.val)
 }
+
+func (v *AdifFieldPrinter) visitRstRcvd(g *RstRcvdGetter) {
+	v.field = "RST_RCVD"
+	v.val = string(g.val)
+}
+
+func (v *AdifFieldPrinter) visitRstSent(g *RstSentGetter) {
+	v.field = "RST_SENT"
+	v.val = string(g.val)
+}
+
+func (v *AdifFieldPrinter) visitState(g *StateGetter) {
+	v.field = "STATE"
+	v.val = string(g.val)
+}

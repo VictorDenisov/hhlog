@@ -107,6 +107,18 @@ func (v *HhlogFieldPrinter) visitSect(g *SectGetter) {
 	v.val = string(g.val)
 }
 
+func (v *HhlogFieldPrinter) visitRstRcvd(g *RstRcvdGetter) {
+	v.val = string(g.val)
+}
+
+func (v *HhlogFieldPrinter) visitRstSent(g *RstSentGetter) {
+	v.val = string(g.val)
+}
+
+func (v *HhlogFieldPrinter) visitState(g *StateGetter) {
+	v.val = string(g.val)
+}
+
 type HhlogFieldNamePrinter struct {
 	fieldName string
 }
@@ -169,4 +181,16 @@ func (v *HhlogFieldNamePrinter) visitCk(g *CkGetter) {
 
 func (v *HhlogFieldNamePrinter) visitSect(g *SectGetter) {
 	v.fieldName = SECT
+}
+
+func (v *HhlogFieldNamePrinter) visitRstRcvd(g *RstRcvdGetter) {
+	v.fieldName = RST_RCVD
+}
+
+func (v *HhlogFieldNamePrinter) visitRstSent(g *RstSentGetter) {
+	v.fieldName = RST_SENT
+}
+
+func (v *HhlogFieldNamePrinter) visitState(g *StateGetter) {
+	v.fieldName = STATE
 }

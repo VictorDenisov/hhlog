@@ -17,6 +17,9 @@ type Prec string
 type Ck string
 type Sect string
 type Spc string
+type RstRcvd string
+type RstSent string
+type State string
 
 func (t Time) Valid() error {
 	if len(t) != 4 {
@@ -68,6 +71,9 @@ type Contact struct {
 	Prec      Prec
 	Ck        Ck
 	Sect      Sect
+	RstRcvd   RstRcvd
+	RstSent   RstSent
+	State     State
 }
 
 type FieldSetter func(c *Contact, s string)
@@ -105,6 +111,15 @@ var (
 	SectSetter = func(c *Contact, s string) {
 		c.Sect = Sect(s)
 	}
+	RstRcvdSetter = func(c *Contact, s string) {
+		c.RstRcvd = RstRcvd(s)
+	}
+	RstSentSetter = func(c *Contact, s string) {
+		c.RstSent = RstSent(s)
+	}
+	StateSetter = func(c *Contact, s string) {
+		c.State = State(s)
+	}
 )
 
 type FieldGetterVisitor interface {
@@ -122,6 +137,9 @@ type FieldGetterVisitor interface {
 	visitPrec(g *PrecGetter)
 	visitCk(g *CkGetter)
 	visitSect(g *SectGetter)
+	visitRstRcvd(g *RstRcvdGetter)
+	visitRstSent(g *RstSentGetter)
+	visitState(g *StateGetter)
 }
 
 type FieldGetter interface {
@@ -309,4 +327,40 @@ func (g *SectGetter) get(c *Contact) {
 
 func (g *SectGetter) accept(v FieldGetterVisitor) {
 	v.visitSect(g)
+}
+
+type RstRcvdGetter struct {
+	val RstRcvd
+}
+
+func (g *RstRcvdGetter) get(c *Contact) {
+	g.val = c.RstRcvd
+}
+
+func (g *RstRcvdGetter) accept(v FieldGetterVisitor) {
+	v.visitRstRcvd(g)
+}
+
+type RstSentGetter struct {
+	val RstSent
+}
+
+func (g *RstSentGetter) get(c *Contact) {
+	g.val = c.RstSent
+}
+
+func (g *RstSentGetter) accept(v FieldGetterVisitor) {
+	v.visitRstSent(g)
+}
+
+type StateGetter struct {
+	val State
+}
+
+func (g *StateGetter) get(c *Contact) {
+	g.val = c.State
+}
+
+func (g *StateGetter) accept(v FieldGetterVisitor) {
+	v.visitState(g)
 }

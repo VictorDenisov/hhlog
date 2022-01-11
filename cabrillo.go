@@ -91,3 +91,15 @@ func (v *CabrilloFieldPrinter) visitCk(g *CkGetter) {
 func (v *CabrilloFieldPrinter) visitSect(g *SectGetter) {
 	v.val = string(g.val)
 }
+
+func (v *CabrilloFieldPrinter) visitRstRcvd(g *RstRcvdGetter) {
+	v.val = string(g.val)
+}
+
+func (v *CabrilloFieldPrinter) visitRstSent(g *RstSentGetter) {
+	v.val = string(g.val)
+}
+
+func (v *CabrilloFieldPrinter) visitState(g *StateGetter) {
+	v.val = string(g.val)
+}

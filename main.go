@@ -83,7 +83,7 @@ The name of the input file should have the following structure: <CALLSIGN>@<PARK
 		renderHhlog(os.Stdout, getters, contacts)
 	default:
 		fmt.Fprintf(os.Stderr, "Unknown output format: %v\n", outFormat)
-		fmt.Fprintf(os.Stderr, "Allowed formats are: %v, %v\n", ADIF, CABRILLO, HHLOG)
+		fmt.Fprintf(os.Stderr, "Allowed formats are: %v, %v, %v\n", ADIF, CABRILLO, HHLOG)
 		os.Exit(1)
 	}
 }

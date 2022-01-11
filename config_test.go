@@ -22,7 +22,7 @@ wwff:
     name: WwffName
     email: WwffMail
     `
-	conf, err := readConfig([]byte(data))
+	conf, err := parseConfig([]byte(data))
 	assert.Nil(t, err)
 	assert.NotNil(t, conf)
 }
