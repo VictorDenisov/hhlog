@@ -20,6 +20,7 @@ type Spc string
 type RstRcvd string
 type RstSent string
 type State string
+type MySotaRef string
 
 func (t Time) Valid() error {
 	if len(t) != 4 {
@@ -74,6 +75,7 @@ type Contact struct {
 	RstRcvd   RstRcvd
 	RstSent   RstSent
 	State     State
+	MySotaRef MySotaRef
 }
 
 type FieldSetter func(c *Contact, s string)
@@ -120,6 +122,9 @@ var (
 	StateSetter = func(c *Contact, s string) {
 		c.State = State(s)
 	}
+	MySotaRefSetter = func(c *Contact, s string) {
+		c.MySotaRef = MySotaRef(s)
+	}
 )
 
 type FieldGetterVisitor interface {
@@ -140,6 +145,7 @@ type FieldGetterVisitor interface {
 	visitRstRcvd(g *RstRcvdGetter)
 	visitRstSent(g *RstSentGetter)
 	visitState(g *StateGetter)
+	visitMySotaRef(g *MySotaRefGetter)
 }
 
 type FieldGetter interface {
@@ -363,4 +369,16 @@ func (g *StateGetter) get(c *Contact) {
 
 func (g *StateGetter) accept(v FieldGetterVisitor) {
 	v.visitState(g)
+}
+
+type MySotaRefGetter struct {
+	val MySotaRef
+}
+
+func (g *MySotaRefGetter) get(c *Contact) {
+	g.val = c.MySotaRef
+}
+
+func (g *MySotaRefGetter) accept(v FieldGetterVisitor) {
+	v.visitMySotaRef(g)
 }

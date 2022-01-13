@@ -103,3 +103,7 @@ func (v *CabrilloFieldPrinter) visitRstSent(g *RstSentGetter) {
 func (v *CabrilloFieldPrinter) visitState(g *StateGetter) {
 	v.val = string(g.val)
 }
+
+func (v *CabrilloFieldPrinter) visitMySotaRef(g *MySotaRefGetter) {
+	v.val = string(g.val)
+}

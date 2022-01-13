@@ -6,23 +6,24 @@ import (
 )
 
 const (
-	FREQUENCY = "%f"
-	CALL      = "%c"
-	DATE      = "%d"
-	TIME      = "%t"
-	BAND      = "%b"
-	MODE      = "%m"
-	SKCC      = "%skcc"
-	NAME      = "%n"
-	SPC       = "%spc"
-	SRX       = "%srx"
-	STX       = "%stx"
-	PREC      = "%prec"
-	CK        = "%ck"
-	SECT      = "%sect"
-	RST_RCVD  = "%rst_rcvd"
-	RST_SENT  = "%rst_sent"
-	STATE     = "%state"
+	FREQUENCY   = "%f"
+	CALL        = "%c"
+	DATE        = "%d"
+	TIME        = "%t"
+	BAND        = "%b"
+	MODE        = "%m"
+	SKCC        = "%skcc"
+	NAME        = "%n"
+	SPC         = "%spc"
+	SRX         = "%srx"
+	STX         = "%stx"
+	PREC        = "%prec"
+	CK          = "%ck"
+	SECT        = "%sect"
+	RST_RCVD    = "%rst_rcvd"
+	RST_SENT    = "%rst_sent"
+	STATE       = "%state"
+	MY_SOTA_REF = "%my_sota_ref"
 )
 
 type FieldHandlers struct {
@@ -122,6 +123,11 @@ var (
 			func() FieldSetter { return StateSetter },
 			func() FieldGetter { return &StateGetter{} },
 			fmt.Sprintf("%v\t- the code for the contacted station's Primary Administrative Subdivision (e.g. US State, JA Island, VE Province)", STATE),
+		},
+		MY_SOTA_REF: FieldHandlers{
+			func() FieldSetter { return MySotaRefSetter },
+			func() FieldGetter { return &MySotaRefGetter{} },
+			fmt.Sprintf("%v\t- the logging station's International SOTA Reference.", MY_SOTA_REF),
 		},
 	}
 )
@@ -249,5 +255,9 @@ func (v *ValueVisitor) visitRstSent(g *RstSentGetter) {
 }
 
 func (v *ValueVisitor) visitState(g *StateGetter) {
+	v.val = string(g.val)
+}
+
+func (v *ValueVisitor) visitMySotaRef(g *MySotaRefGetter) {
 	v.val = string(g.val)
 }

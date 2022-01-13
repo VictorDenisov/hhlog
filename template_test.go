@@ -33,6 +33,7 @@ func TestParseWritingTemplate(t *testing.T) {
 		"rst_rcvd",
 		"rst_sent",
 		"state",
+		"my_sota_ref",
 	}
 
 	values := make([]string, len(r))
