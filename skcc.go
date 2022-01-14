@@ -85,7 +85,10 @@ func retrieveRoster() (string, error) {
 		if err != nil {
 			return "", nil
 		}
-		ioutil.WriteFile(skccCachePath, roster, 0666)
+		err = ioutil.WriteFile(skccCachePath, roster, 0666)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Failed to save retrieved skcc data into a file: %v\n", err)
+		}
 		return string(roster), nil
 	}
 	if err != nil {
