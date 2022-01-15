@@ -61,6 +61,8 @@ func (d Date) Valid() error {
 	return nil
 }
 
+// Implementation of read contacts relies on the fact that fields of this
+// structure are immutable.
 type Contact struct {
 	Frequency Frequency
 	Call      Call

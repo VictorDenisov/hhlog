@@ -36,6 +36,7 @@ func readStructure(lr *LineReader) ([]FieldSetter, error) {
 
 func readContacts(lr *LineReader) (contacts []Contact, err error) {
 	var setters []FieldSetter
+	contact := Contact{}
 	for {
 		l, c, err := lr.ReadLine()
 		if err == io.EOF {
@@ -56,10 +57,9 @@ func readContacts(lr *LineReader) (contacts []Contact, err error) {
 		} else {
 			var fields []string
 			fields = strings.Split(l, "\t")
-			if len(fields) != len(setters) {
-				return nil, fmt.Errorf("Line %v: Wrong number of fields.", lr.LineNumber())
-			}
-			contact := Contact{}
+			if len(fields) > len(setters) {
+				return nil, fmt.Errorf("Line %v: Contains more values than fields.", lr.LineNumber())
+			} // Less fields is fine. The missing fields will be taken from the most recent contact with this value specified.
 			for i, f := range fields {
 				setters[i](&contact, f)
 			}
