@@ -41,7 +41,7 @@ func (v *AdifFieldPrinter) visitFrequency(g *FrequencyGetter) {
 
 func (v *AdifFieldPrinter) visitCall(g *CallGetter) {
 	v.field = "CALL"
-	v.val = g.val
+	v.val = string(g.val)
 }
 
 func (v *AdifFieldPrinter) visitDate(g *DateGetter) {

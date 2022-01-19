@@ -195,7 +195,7 @@ func (v *ValueVisitor) visitFrequency(g *FrequencyGetter) {
 }
 
 func (v *ValueVisitor) visitCall(g *CallGetter) {
-	v.val = g.val
+	v.val = string(g.val)
 }
 
 func (v *ValueVisitor) visitDate(g *DateGetter) {

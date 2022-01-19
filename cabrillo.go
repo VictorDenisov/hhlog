@@ -35,7 +35,7 @@ func (v *CabrilloFieldPrinter) visitFrequency(g *FrequencyGetter) {
 }
 
 func (v *CabrilloFieldPrinter) visitCall(g *CallGetter) {
-	v.val = g.val
+	v.val = string(g.val)
 }
 
 func (v *CabrilloFieldPrinter) visitDate(g *DateGetter) {

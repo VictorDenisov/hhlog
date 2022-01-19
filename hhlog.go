@@ -51,7 +51,7 @@ func (v *HhlogFieldPrinter) visitFrequency(g *FrequencyGetter) {
 }
 
 func (v *HhlogFieldPrinter) visitCall(g *CallGetter) {
-	v.val = g.val
+	v.val = string(g.val)
 }
 
 func (v *HhlogFieldPrinter) visitDate(g *DateGetter) {

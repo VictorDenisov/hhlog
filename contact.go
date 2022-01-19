@@ -170,11 +170,11 @@ func (g *FrequencyGetter) accept(v FieldGetterVisitor) {
 }
 
 type CallGetter struct {
-	val string
+	val Call
 }
 
 func (g *CallGetter) get(c *Contact) {
-	g.val = string(c.Call)
+	g.val = c.Call
 }
 
 func (g *CallGetter) accept(v FieldGetterVisitor) {
