@@ -43,12 +43,22 @@ The name of the input file should have the following structure: <CALLSIGN>@<PARK
 	}
 
 	config := readConfig()
+	var rawContacts []Contact
 
-	rawContacts, err := readInputFiles(inFile)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Failed to read input files:\n")
-		fmt.Fprintf(os.Stderr, "%v\n", err)
-		os.Exit(1)
+	if len(inFile) == 0 {
+		rawContacts, err = readStdin()
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Failed to read contacts from stdin:\n")
+			fmt.Fprintf(os.Stderr, "%v\n", err)
+			os.Exit(1)
+		}
+	} else {
+		rawContacts, err = readInputFiles(inFile)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Failed to read input files:\n")
+			fmt.Fprintf(os.Stderr, "%v\n", err)
+			os.Exit(1)
+		}
 	}
 	contacts := make([]Contact, 0)
 	for _, c := range rawContacts {

@@ -8,6 +8,15 @@ import (
 	"strings"
 )
 
+func readStdin() (cs []Contact, err error) {
+	lineReader := NewLineReader(os.Stdin)
+	contacts, err := readContacts(lineReader)
+	if err != nil {
+		return nil, err
+	}
+	return contacts, nil
+}
+
 func readInputFiles(files StringArray) (cs []Contact, err error) {
 	cs = make([]Contact, 0)
 	for _, fileName := range files {
