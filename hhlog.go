@@ -39,88 +39,90 @@ var fieldNameContact = Contact{
 }
 
 type HhlogFieldPrinter struct {
-	val string
+	valueVisitor *ValueVisitor
 }
 
 func (v *HhlogFieldPrinter) printField(f *os.File) {
-	fmt.Fprintf(f, "%v\t", v.val)
+	fmt.Fprintf(f, "%v\t", v.valueVisitor.val)
 }
 
 func (v *HhlogFieldPrinter) visitFrequency(g *FrequencyGetter) {
-	v.val = string(g.val)
+	g.accept(v.valueVisitor)
 }
 
 func (v *HhlogFieldPrinter) visitCall(g *CallGetter) {
-	v.val = string(g.val)
+	g.accept(v.valueVisitor)
 }
 
 func (v *HhlogFieldPrinter) visitDate(g *DateGetter) {
-	v.val = g.val
+	g.accept(v.valueVisitor)
 }
 
 func (v *HhlogFieldPrinter) visitTime(g *TimeGetter) {
-	v.val = g.val
+	g.accept(v.valueVisitor)
 }
 
 func (v *HhlogFieldPrinter) visitMode(g *ModeGetter) {
-	v.val = g.val
+	g.accept(v.valueVisitor)
 }
 
 func (v *HhlogFieldPrinter) visitBand(g *BandGetter) {
-	if g.val == "20M" {
-		v.val = "14000"
+	g.accept(v.valueVisitor)
+	val := v.valueVisitor.val
+	if val == "20M" {
+		v.valueVisitor.val = "14000"
 	}
-	if g.val == "40M" {
-		v.val = "7000"
+	if val == "40M" {
+		v.valueVisitor.val = "7000"
 	}
 }
 
 func (v *HhlogFieldPrinter) visitSkcc(g *SkccGetter) {
-	v.val = g.val
+	g.accept(v.valueVisitor)
 }
 
 func (v *HhlogFieldPrinter) visitName(g *NameGetter) {
-	v.val = g.val
+	g.accept(v.valueVisitor)
 }
 
 func (v *HhlogFieldPrinter) visitSpc(g *SpcGetter) {
-	v.val = string(g.val)
+	g.accept(v.valueVisitor)
 }
 
 func (v *HhlogFieldPrinter) visitSrx(g *SrxGetter) {
-	v.val = string(g.val)
+	g.accept(v.valueVisitor)
 }
 
 func (v *HhlogFieldPrinter) visitStx(g *StxGetter) {
-	v.val = string(g.val)
+	g.accept(v.valueVisitor)
 }
 
 func (v *HhlogFieldPrinter) visitPrec(g *PrecGetter) {
-	v.val = string(g.val)
+	g.accept(v.valueVisitor)
 }
 
 func (v *HhlogFieldPrinter) visitCk(g *CkGetter) {
-	v.val = string(g.val)
+	g.accept(v.valueVisitor)
 }
 
 func (v *HhlogFieldPrinter) visitSect(g *SectGetter) {
-	v.val = string(g.val)
+	g.accept(v.valueVisitor)
 }
 
 func (v *HhlogFieldPrinter) visitRstRcvd(g *RstRcvdGetter) {
-	v.val = string(g.val)
+	g.accept(v.valueVisitor)
 }
 
 func (v *HhlogFieldPrinter) visitRstSent(g *RstSentGetter) {
-	v.val = string(g.val)
+	g.accept(v.valueVisitor)
 }
 
 func (v *HhlogFieldPrinter) visitState(g *StateGetter) {
-	v.val = string(g.val)
+	g.accept(v.valueVisitor)
 }
 
 func (v *HhlogFieldPrinter) visitMySotaRef(g *MySotaRefGetter) {
-	v.val = string(g.val)
+	g.accept(v.valueVisitor)
 }
 
 type HhlogFieldNamePrinter struct {
