@@ -21,89 +21,93 @@ func renderCabrillo(getters []FieldGetter, contacts []Contact) {
 }
 
 type CabrilloFieldPrinter struct {
-	val string
+	valueVisitor *ValueVisitor
 }
 
 func (v *CabrilloFieldPrinter) printField() {
-	fmt.Printf("%v\t", v.val)
+	fmt.Printf("%v\t", v.valueVisitor.val)
 }
 
 func (v *CabrilloFieldPrinter) visitFrequency(g *FrequencyGetter) {
-	f := string(g.val)
+	g.accept(v.valueVisitor)
+	f := v.valueVisitor.val
 	p := strings.Index(f, ".")
-	v.val = f[0:p] + f[p+1:p+4]
+	v.valueVisitor.val = f[0:p] + f[p+1:p+4]
 }
 
 func (v *CabrilloFieldPrinter) visitCall(g *CallGetter) {
-	v.val = string(g.val)
+	g.accept(v.valueVisitor)
 }
 
 func (v *CabrilloFieldPrinter) visitDate(g *DateGetter) {
-	s := g.val
-	v.val = s[0:4] + "-" + s[4:6] + "-" + s[6:8]
+	g.accept(v.valueVisitor)
+	s := v.valueVisitor.val
+	v.valueVisitor.val = s[0:4] + "-" + s[4:6] + "-" + s[6:8]
 }
 
 func (v *CabrilloFieldPrinter) visitTime(g *TimeGetter) {
-	v.val = g.val
+	g.accept(v.valueVisitor)
 }
 
 func (v *CabrilloFieldPrinter) visitMode(g *ModeGetter) {
-	v.val = g.val
+	g.accept(v.valueVisitor)
 }
 
 func (v *CabrilloFieldPrinter) visitBand(g *BandGetter) {
-	if g.val == "20M" {
-		v.val = "14000"
+	g.accept(v.valueVisitor)
+	val := v.valueVisitor.val
+	if val == "20M" {
+		v.valueVisitor.val = "14000"
 	}
-	if g.val == "40M" {
-		v.val = "7000"
+	if val == "40M" {
+		v.valueVisitor.val = "7000"
 	}
 }
 
 func (v *CabrilloFieldPrinter) visitSkcc(g *SkccGetter) {
-	v.val = g.val
+	g.accept(v.valueVisitor)
 }
 
 func (v *CabrilloFieldPrinter) visitName(g *NameGetter) {
-	v.val = g.val
+	g.accept(v.valueVisitor)
 }
 
 func (v *CabrilloFieldPrinter) visitSpc(g *SpcGetter) {
-	v.val = string(g.val)
+	g.accept(v.valueVisitor)
 }
 
 func (v *CabrilloFieldPrinter) visitSrx(g *SrxGetter) {
-	v.val = string(g.val)
+	g.accept(v.valueVisitor)
 }
 
 func (v *CabrilloFieldPrinter) visitStx(g *StxGetter) {
-	v.val = string(g.val)
+	g.accept(v.valueVisitor)
 }
 
 func (v *CabrilloFieldPrinter) visitPrec(g *PrecGetter) {
-	v.val = string(g.val)
+	g.accept(v.valueVisitor)
 }
 
 func (v *CabrilloFieldPrinter) visitCk(g *CkGetter) {
-	v.val = string(g.val)
+	g.accept(v.valueVisitor)
 }
 
 func (v *CabrilloFieldPrinter) visitSect(g *SectGetter) {
-	v.val = string(g.val)
+	g.accept(v.valueVisitor)
 }
 
 func (v *CabrilloFieldPrinter) visitRstRcvd(g *RstRcvdGetter) {
-	v.val = string(g.val)
+	g.accept(v.valueVisitor)
 }
 
 func (v *CabrilloFieldPrinter) visitRstSent(g *RstSentGetter) {
-	v.val = string(g.val)
+	g.accept(v.valueVisitor)
 }
 
 func (v *CabrilloFieldPrinter) visitState(g *StateGetter) {
-	v.val = string(g.val)
+	g.accept(v.valueVisitor)
 }
 
 func (v *CabrilloFieldPrinter) visitMySotaRef(g *MySotaRefGetter) {
-	v.val = string(g.val)
+	g.accept(v.valueVisitor)
 }
