@@ -182,11 +182,11 @@ func (g *CallGetter) accept(v FieldGetterVisitor) {
 }
 
 type DateGetter struct {
-	val string
+	val Date
 }
 
 func (g *DateGetter) get(c *Contact) {
-	g.val = string(c.Date)
+	g.val = c.Date
 }
 
 func (g *DateGetter) accept(v FieldGetterVisitor) {
@@ -194,11 +194,11 @@ func (g *DateGetter) accept(v FieldGetterVisitor) {
 }
 
 type TimeGetter struct {
-	val string
+	val Time
 }
 
 func (g *TimeGetter) get(c *Contact) {
-	g.val = string(c.Time)
+	g.val = c.Time
 }
 
 func (g *TimeGetter) accept(v FieldGetterVisitor) {
@@ -206,11 +206,11 @@ func (g *TimeGetter) accept(v FieldGetterVisitor) {
 }
 
 type ModeGetter struct {
-	val string
+	val Mode
 }
 
 func (g *ModeGetter) get(c *Contact) {
-	g.val = string(c.Mode)
+	g.val = c.Mode
 }
 
 func (g *ModeGetter) accept(v FieldGetterVisitor) {

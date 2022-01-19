@@ -199,19 +199,19 @@ func (v *ValueVisitor) visitCall(g *CallGetter) {
 }
 
 func (v *ValueVisitor) visitDate(g *DateGetter) {
-	v.val = g.val
+	v.val = string(g.val)
 }
 
 func (v *ValueVisitor) visitTime(g *TimeGetter) {
-	v.val = g.val
+	v.val = string(g.val)
 }
 
 func (v *ValueVisitor) visitMode(g *ModeGetter) {
-	v.val = g.val
+	v.val = string(g.val)
 }
 
 func (v *ValueVisitor) visitBand(g *BandGetter) {
-	v.val = g.val
+	v.val = string(g.val)
 }
 
 func (v *ValueVisitor) visitSkcc(g *SkccGetter) {
