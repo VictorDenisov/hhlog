@@ -13,7 +13,7 @@ func renderAdif(f *os.File, getters []FieldGetter, contacts []Contact) {
 
 	for _, c := range contacts {
 		for i, g := range getters {
-			fp := &AdifFieldPrinter{}
+			fp := NewAdifFieldPrinter()
 			g.get(&c)
 			g.accept(fp)
 			if i > 0 {
@@ -25,101 +25,105 @@ func renderAdif(f *os.File, getters []FieldGetter, contacts []Contact) {
 	}
 }
 
+func NewAdifFieldPrinter() *AdifFieldPrinter {
+	return &AdifFieldPrinter{valueVisitor: &ValueVisitor{}}
+}
+
 type AdifFieldPrinter struct {
-	field string
-	val   string
+	field        string
+	valueVisitor *ValueVisitor
 }
 
 func (v *AdifFieldPrinter) printField(f *os.File) {
-	fmt.Fprintf(f, "<%v:%v>%v\n", v.field, len(v.val), v.val)
+	fmt.Fprintf(f, "<%v:%v>%v\n", v.field, len(v.valueVisitor.val), v.valueVisitor.val)
 }
 
 func (v *AdifFieldPrinter) visitFrequency(g *FrequencyGetter) {
 	v.field = "FREQ"
-	v.val = string(g.val)
+	g.accept(v.valueVisitor)
 }
 
 func (v *AdifFieldPrinter) visitCall(g *CallGetter) {
 	v.field = "CALL"
-	v.val = string(g.val)
+	g.accept(v.valueVisitor)
 }
 
 func (v *AdifFieldPrinter) visitDate(g *DateGetter) {
 	v.field = "QSO_DATE"
-	v.val = g.val
+	g.accept(v.valueVisitor)
 }
 
 func (v *AdifFieldPrinter) visitTime(g *TimeGetter) {
 	v.field = "TIME_ON"
-	v.val = g.val
+	g.accept(v.valueVisitor)
 }
 
 func (v *AdifFieldPrinter) visitMode(g *ModeGetter) {
 	v.field = "MODE"
-	v.val = g.val
+	g.accept(v.valueVisitor)
 }
 
 func (v *AdifFieldPrinter) visitBand(g *BandGetter) {
 	v.field = "BAND"
-	v.val = g.val
+	g.accept(v.valueVisitor)
 }
 
 func (v *AdifFieldPrinter) visitSkcc(g *SkccGetter) {
 	v.field = "SKCC"
-	v.val = g.val
+	g.accept(v.valueVisitor)
 }
 
 func (v *AdifFieldPrinter) visitName(g *NameGetter) {
 	v.field = "NAME"
-	v.val = g.val
+	g.accept(v.valueVisitor)
 }
 
 func (v *AdifFieldPrinter) visitSpc(g *SpcGetter) {
 	v.field = "SPC"
-	v.val = string(g.val)
+	g.accept(v.valueVisitor)
 }
 
 func (v *AdifFieldPrinter) visitSrx(g *SrxGetter) {
 	v.field = "SRX"
-	v.val = string(g.val)
+	g.accept(v.valueVisitor)
 }
 
 func (v *AdifFieldPrinter) visitStx(g *StxGetter) {
 	v.field = "STX"
-	v.val = string(g.val)
+	g.accept(v.valueVisitor)
 }
 
 func (v *AdifFieldPrinter) visitPrec(g *PrecGetter) {
 	v.field = "PRECEDENCE"
-	v.val = string(g.val)
+	g.accept(v.valueVisitor)
 }
 
 func (v *AdifFieldPrinter) visitCk(g *CkGetter) {
 	v.field = "CHECK"
-	v.val = string(g.val)
+	g.accept(v.valueVisitor)
 }
 
 func (v *AdifFieldPrinter) visitSect(g *SectGetter) {
 	v.field = "ARRL_SECT"
-	v.val = string(g.val)
+	g.accept(v.valueVisitor)
 }
 
 func (v *AdifFieldPrinter) visitRstRcvd(g *RstRcvdGetter) {
 	v.field = "RST_RCVD"
-	v.val = string(g.val)
+	g.accept(v.valueVisitor)
 }
 
 func (v *AdifFieldPrinter) visitRstSent(g *RstSentGetter) {
 	v.field = "RST_SENT"
-	v.val = string(g.val)
+	g.accept(v.valueVisitor)
 }
 
 func (v *AdifFieldPrinter) visitState(g *StateGetter) {
 	v.field = "STATE"
-	v.val = string(g.val)
+	g.accept(v.valueVisitor)
 }
 
 func (v *AdifFieldPrinter) visitMySotaRef(g *MySotaRefGetter) {
 	v.field = "MY_SOTA_REF"
-	v.val = string(g.val)
+	g.accept(v.valueVisitor)
 }
