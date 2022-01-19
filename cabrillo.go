@@ -29,7 +29,7 @@ func (v *CabrilloFieldPrinter) printField() {
 }
 
 func (v *CabrilloFieldPrinter) visitFrequency(g *FrequencyGetter) {
-	f := g.val
+	f := string(g.val)
 	p := strings.Index(f, ".")
 	v.val = f[0:p] + f[p+1:p+4]
 }

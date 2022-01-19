@@ -191,7 +191,7 @@ type ValueVisitor struct {
 }
 
 func (v *ValueVisitor) visitFrequency(g *FrequencyGetter) {
-	v.val = g.val
+	v.val = string(g.val)
 }
 
 func (v *ValueVisitor) visitCall(g *CallGetter) {

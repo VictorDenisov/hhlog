@@ -158,11 +158,11 @@ type FieldGetter interface {
 type FieldGetterConstructor func() FieldGetter
 
 type FrequencyGetter struct {
-	val string
+	val Frequency
 }
 
 func (g *FrequencyGetter) get(c *Contact) {
-	g.val = string(c.Frequency)
+	g.val = c.Frequency
 }
 
 func (g *FrequencyGetter) accept(v FieldGetterVisitor) {

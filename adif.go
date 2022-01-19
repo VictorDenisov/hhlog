@@ -36,7 +36,7 @@ func (v *AdifFieldPrinter) printField(f *os.File) {
 
 func (v *AdifFieldPrinter) visitFrequency(g *FrequencyGetter) {
 	v.field = "FREQ"
-	v.val = g.val
+	v.val = string(g.val)
 }
 
 func (v *AdifFieldPrinter) visitCall(g *CallGetter) {
