@@ -15,7 +15,7 @@ func renderHhlog(f *os.File, getters []FieldGetter, contacts []Contact) {
 	}
 	fmt.Fprintf(f, "\n")
 	for _, c := range contacts {
-		fp := &HhlogFieldPrinter{}
+		fp := NewHhlogFieldPrinter()
 		for _, g := range getters {
 			g.get(&c)
 			g.accept(fp)
@@ -36,6 +36,10 @@ var fieldNameContact = Contact{
 	Prec:      PREC,
 	Ck:        CK,
 	Sect:      SECT,
+}
+
+func NewHhlogFieldPrinter() *HhlogFieldPrinter {
+	return &HhlogFieldPrinter{&ValueVisitor{}}
 }
 
 type HhlogFieldPrinter struct {
