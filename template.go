@@ -78,8 +78,7 @@ var (
 			fmt.Sprintf("%v\t- the contacted station's operator name", NAME),
 		},
 		SPC: FieldHandlers{
-			nil,
-			//func() FieldSetter { return ModeSetter },
+			func() FieldSetter { return SpcSetter },
 			func() FieldGetter { return &SpcGetter{skccDb, ""} },
 			fmt.Sprintf("%v\t- skcc spc", SPC),
 		},

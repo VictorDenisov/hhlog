@@ -71,6 +71,7 @@ type Contact struct {
 	Time      Time
 	Mode      Mode
 	Skcc      Skcc
+	Spc       Spc
 	Srx       Srx
 	Stx       Stx
 	Prec      Prec
@@ -104,6 +105,9 @@ var (
 	}
 	SkccSetter = func(c *Contact, s string) {
 		c.Skcc = Skcc(s)
+	}
+	SpcSetter = func(c *Contact, s string) {
+		c.Spc = Spc(s)
 	}
 	SrxSetter = func(c *Contact, s string) {
 		c.Srx = Srx(s)
@@ -278,8 +282,12 @@ type SpcGetter struct {
 }
 
 func (g *SpcGetter) get(c *Contact) {
-	call := string(c.Call)
-	g.val = g.db.callIndex[call].Spc
+	if c.Spc == "" {
+		call := string(c.Call)
+		g.val = g.db.callIndex[call].Spc
+	} else {
+		g.val = c.Spc
+	}
 }
 
 func (g *SpcGetter) accept(v FieldGetterVisitor) {
