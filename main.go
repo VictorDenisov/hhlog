@@ -87,6 +87,8 @@ The name of the input file should have the following structure: <CALLSIGN>@<PARK
 	}
 
 	if calcSkcc {
+		calcSkccScore(contacts)
+		return
 	}
 
 	getters, err := parseWritingTemplate(template)

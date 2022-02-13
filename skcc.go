@@ -170,3 +170,29 @@ func ensureConfigPathExists(configPath string) error {
 	}
 	return nil
 }
+
+func calcSkccScore(contacts []Contact) {
+	spcs := make(map[Spc]struct{})
+	centurions := make(map[Call]struct{})
+	tribunes := make(map[Call]struct{})
+	senators := make(map[Call]struct{})
+	for _, c := range contacts {
+		spcs[c.Spc] = struct{}{}
+		skcc := string(c.Skcc)
+		if strings.HasSuffix(strings.ToLower(skcc), "c") {
+			centurions[c.Call] = struct{}{}
+		}
+		if strings.HasSuffix(strings.ToLower(skcc), "t") {
+			tribunes[c.Call] = struct{}{}
+		}
+		if strings.HasSuffix(strings.ToLower(skcc), "s") {
+			senators[c.Call] = struct{}{}
+		}
+	}
+
+	fmt.Printf("Total QSOs: %v\n", len(contacts))
+	fmt.Printf("Unique SPCs: %v\n", len(spcs))
+	fmt.Printf("Unique centurions: %v\n", len(centurions))
+	fmt.Printf("Unique tribunes: %v\n", len(tribunes))
+	fmt.Printf("Unique senators: %v\n", len(senators))
+}
