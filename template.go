@@ -67,8 +67,7 @@ var (
 			fmt.Sprintf("%v\t- band", MODE),
 		},
 		SKCC: FieldHandlers{
-			nil,
-			//func() FieldSetter { return ModeSetter },
+			func() FieldSetter { return SkccSetter },
 			func() FieldGetter { return &SkccGetter{skccDb, ""} },
 			fmt.Sprintf("%v\t- skcc number", SKCC),
 		},
@@ -215,7 +214,7 @@ func (v *ValueVisitor) visitBand(g *BandGetter) {
 }
 
 func (v *ValueVisitor) visitSkcc(g *SkccGetter) {
-	v.val = g.val
+	v.val = string(g.val)
 }
 
 func (v *ValueVisitor) visitName(g *NameGetter) {

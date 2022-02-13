@@ -11,6 +11,7 @@ type Call string
 type Date string
 type Time string
 type Mode string
+type Skcc string
 type Srx string
 type Stx string
 type Prec string
@@ -69,6 +70,7 @@ type Contact struct {
 	Date      Date
 	Time      Time
 	Mode      Mode
+	Skcc      Skcc
 	Srx       Srx
 	Stx       Stx
 	Prec      Prec
@@ -99,6 +101,9 @@ var (
 	}
 	ModeSetter = func(c *Contact, s string) {
 		c.Mode = Mode(s)
+	}
+	SkccSetter = func(c *Contact, s string) {
+		c.Skcc = Skcc(s)
 	}
 	SrxSetter = func(c *Contact, s string) {
 		c.Srx = Srx(s)
@@ -237,12 +242,16 @@ func (g *BandGetter) accept(v FieldGetterVisitor) {
 
 type SkccGetter struct {
 	db  *SkccDB
-	val string
+	val Skcc
 }
 
 func (g *SkccGetter) get(c *Contact) {
-	call := string(c.Call)
-	g.val = g.db.callIndex[call].Skcc
+	if c.Skcc == "" {
+		call := string(c.Call)
+		g.val = g.db.callIndex[call].Skcc
+	} else {
+		g.val = c.Skcc
+	}
 }
 
 func (g *SkccGetter) accept(v FieldGetterVisitor) {

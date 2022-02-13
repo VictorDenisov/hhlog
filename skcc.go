@@ -11,7 +11,7 @@ import (
 )
 
 type SkccMember struct {
-	Skcc string
+	Skcc Skcc
 	Call string
 	Name string
 	City string
@@ -131,7 +131,7 @@ func (r *TagReader) ReadTag() (res string) {
 
 func ParseLine(s string) (res SkccMember) {
 	tr := &TagReader{s, "td"}
-	res.Skcc = tr.ReadTag()
+	res.Skcc = Skcc(tr.ReadTag())
 	res.Call = strings.ToLower(tr.ReadTag())
 	res.Name = tr.ReadTag()
 	res.City = tr.ReadTag()
