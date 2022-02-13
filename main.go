@@ -20,6 +20,7 @@ func main() {
 		filter    string
 		parkName  string
 		sendPota  bool
+		calcSkcc  bool
 	)
 
 	flag.StringVar(&outFormat, "out", "", fmt.Sprintf("Output format: %v, %v, %v", ADIF, CABRILLO, HHLOG))
@@ -33,12 +34,19 @@ func main() {
 If pota section is configured in the config file it will send it to the pota coordinator. If the wwff section is configured it will also send it to wwff coordinator.
 
 The name of the input file should have the following structure: <CALLSIGN>@<PARK>-DATE.hhl. <PARK> can be either K-<number> or KFF-<number>. The app will choose the right prefix for the submission.`)
+	flag.BoolVar(&calcSkcc, "calc-skcc", false, ``)
 	flag.StringVar(&parkName, "park-name", "", "Park name for pota submission")
 	flag.Parse()
 	filterExpr, err := ParseFilter(filter)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Failed to parse filter expression.")
 		fmt.Fprintf(os.Stderr, "%v\n", err)
+		os.Exit(1)
+	}
+
+	err = checkExclusion(sendPota, calcSkcc, outFormat)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "%s\n", err)
 		os.Exit(1)
 	}
 
@@ -78,6 +86,9 @@ The name of the input file should have the following structure: <CALLSIGN>@<PARK
 		return
 	}
 
+	if calcSkcc {
+	}
+
 	getters, err := parseWritingTemplate(template)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Failed to parse writing template: %v\n", err)
@@ -96,4 +107,21 @@ The name of the input file should have the following structure: <CALLSIGN>@<PARK
 		fmt.Fprintf(os.Stderr, "Allowed formats are: %v, %v, %v\n", ADIF, CABRILLO, HHLOG)
 		os.Exit(1)
 	}
+}
+
+func checkExclusion(sendPota, calcSkcc bool, outFormat string) error {
+	trueCount := 0
+	if outFormat != "" {
+		trueCount++
+	}
+	if calcSkcc {
+		trueCount++
+	}
+	if sendPota {
+		trueCount++
+	}
+	if trueCount > 1 {
+		return fmt.Errorf("Only one of send-pota, calc-skcc, out can be specified.")
+	}
+	return nil
 }
