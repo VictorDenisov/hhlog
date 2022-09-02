@@ -24,6 +24,7 @@ const (
 	RST_SENT    = "%rst_sent"
 	STATE       = "%state"
 	MY_SOTA_REF = "%my_sota_ref"
+	MY_STATE    = "%my_state"
 )
 
 type FieldHandlers struct {
@@ -257,5 +258,9 @@ func (v *ValueVisitor) visitState(g *StateGetter) {
 }
 
 func (v *ValueVisitor) visitMySotaRef(g *MySotaRefGetter) {
+	v.val = string(g.val)
+}
+
+func (v *ValueVisitor) visitMyState(g *MyStateGetter) {
 	v.val = string(g.val)
 }

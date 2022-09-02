@@ -129,6 +129,10 @@ func (v *HhlogFieldPrinter) visitMySotaRef(g *MySotaRefGetter) {
 	g.accept(v.valueVisitor)
 }
 
+func (v *HhlogFieldPrinter) visitMyState(g *MyStateGetter) {
+	g.accept(v.valueVisitor)
+}
+
 type HhlogFieldNamePrinter struct {
 	fieldName string
 }
@@ -207,4 +211,8 @@ func (v *HhlogFieldNamePrinter) visitState(g *StateGetter) {
 
 func (v *HhlogFieldNamePrinter) visitMySotaRef(g *MySotaRefGetter) {
 	v.fieldName = MY_SOTA_REF
+}
+
+func (v *HhlogFieldNamePrinter) visitMyState(g *MyStateGetter) {
+	v.fieldName = MY_STATE
 }
