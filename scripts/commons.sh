@@ -102,3 +102,12 @@ section_choice()
                         ;;
         esac
 }
+
+category_mode_choice()
+{
+        PS3='Select mode: '
+        select category_mode in CW DIGI FM RTTY SSB MIXED; do
+                echo $category_mode
+                break
+        done
+}

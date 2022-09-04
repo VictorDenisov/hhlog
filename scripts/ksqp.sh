@@ -7,6 +7,9 @@ echo "Your location is: $section"
 echo "Enter your call sign"
 read callsign
 
+mode=$(category_mode_choice)
+echo "Mode: $mode"
+
 cat << _end_of_text_ > log.txt
 START-OF-LOG: 3.0
 CONTEST: KS-QSO-PARTY
