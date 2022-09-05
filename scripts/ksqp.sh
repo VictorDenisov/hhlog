@@ -1,6 +1,7 @@
 #!/bin/bash
 
 log_file=$1
+file=$(basename $log_file .hhl)
 
 source commons.sh
 section=$(section_choice)
@@ -42,7 +43,7 @@ read country
 echo "Enter your email"
 read email
 
-cat << _end_of_text_ > log.txt
+cat << _end_of_text_ > $file.cab
 START-OF-LOG: 3.0
 CONTEST: KS-QSO-PARTY
 LOCATION: $section
@@ -65,11 +66,9 @@ OPERATORS:
 SOAPBOX: 
 _end_of_text_
 
-hhlog
+hhlog -in $log_file -out cbr -tpl "%b %m %d %t %c %rst_rcvd %cnty" >> $file.cab
 
-QSO: 14000 CW 2022-08-27 1400 N6DVS         559 CA     W0BH          59  JAC    
-
-cat << _end_of_text_ >> log.txt
+cat << _end_of_text_ >> $file.cab
 END-OF-LOG:
 _end_of_text_
 

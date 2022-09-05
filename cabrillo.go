@@ -10,7 +10,7 @@ func renderCabrillo(getters []FieldGetter, contacts []Contact) {
 	for _, c := range contacts {
 		fmt.Printf("QSO: ")
 		for _, g := range getters {
-			fp := &CabrilloFieldPrinter{}
+			fp := NewCabrilloFieldPrinter()
 			g.get(&c)
 			g.accept(fp)
 			fp.printField()
@@ -18,6 +18,10 @@ func renderCabrillo(getters []FieldGetter, contacts []Contact) {
 		fmt.Printf("\n")
 	}
 	fmt.Printf("END-OF-LOG:\n")
+}
+
+func NewCabrilloFieldPrinter() *CabrilloFieldPrinter {
+	return &CabrilloFieldPrinter{valueVisitor: &ValueVisitor{}}
 }
 
 type CabrilloFieldPrinter struct {
@@ -113,5 +117,9 @@ func (v *CabrilloFieldPrinter) visitMySotaRef(g *MySotaRefGetter) {
 }
 
 func (v *CabrilloFieldPrinter) visitMyState(g *MyStateGetter) {
+	g.accept(v.valueVisitor)
+}
+
+func (v *CabrilloFieldPrinter) visitCnty(g *CntyGetter) {
 	g.accept(v.valueVisitor)
 }

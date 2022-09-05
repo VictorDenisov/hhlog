@@ -23,6 +23,7 @@ type RstSent string
 type State string
 type MySotaRef string
 type MyState string
+type Cnty string
 
 func (t Time) Valid() error {
 	if len(t) != 4 {
@@ -83,6 +84,7 @@ type Contact struct {
 	State     State
 	MySotaRef MySotaRef
 	MyState   MyState
+	Cnty      Cnty
 }
 
 type FieldSetter func(c *Contact, s string)
@@ -141,6 +143,9 @@ var (
 	MyStateSetter = func(c *Contact, s string) {
 		c.MyState = MyState(s)
 	}
+	CntySetter = func(c *Contact, s string) {
+		c.Cnty = Cnty(s)
+	}
 )
 
 type FieldGetterVisitor interface {
@@ -163,6 +168,7 @@ type FieldGetterVisitor interface {
 	visitState(g *StateGetter)
 	visitMySotaRef(g *MySotaRefGetter)
 	visitMyState(g *MyStateGetter)
+	visitCnty(g *CntyGetter)
 }
 
 type FieldGetter interface {
@@ -418,4 +424,16 @@ func (g *MyStateGetter) get(c *Contact) {
 
 func (g *MyStateGetter) accept(v FieldGetterVisitor) {
 	v.visitMyState(g)
+}
+
+type CntyGetter struct {
+	val Cnty
+}
+
+func (g *CntyGetter) get(c *Contact) {
+	g.val = c.Cnty
+}
+
+func (g *CntyGetter) accept(v FieldGetterVisitor) {
+	v.visitCnty(g)
 }

@@ -132,3 +132,8 @@ func (v *AdifFieldPrinter) visitMyState(g *MyStateGetter) {
 	v.field = "MY_STATE"
 	g.accept(v.valueVisitor)
 }
+
+func (v *AdifFieldPrinter) visitCnty(g *CntyGetter) {
+	v.field = "CNTY"
+	g.accept(v.valueVisitor)
+}

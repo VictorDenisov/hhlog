@@ -25,6 +25,7 @@ const (
 	STATE       = "%state"
 	MY_SOTA_REF = "%my_sota_ref"
 	MY_STATE    = "%my_state"
+	CNTY        = "%cnty"
 )
 
 type FieldHandlers struct {
@@ -132,6 +133,11 @@ var (
 			func() FieldSetter { return MyStateSetter },
 			func() FieldGetter { return &MyStateGetter{} },
 			fmt.Sprintf("%v\t- the logging station's state.", MY_STATE),
+		},
+		CNTY: FieldHandlers{
+			func() FieldSetter { return CntySetter },
+			func() FieldGetter { return &CntyGetter{} },
+			fmt.Sprintf("%v\t- the contacted station's Secondary Administrative Subdivision (e.g. US county)", CNTY),
 		},
 	}
 )
@@ -267,5 +273,9 @@ func (v *ValueVisitor) visitMySotaRef(g *MySotaRefGetter) {
 }
 
 func (v *ValueVisitor) visitMyState(g *MyStateGetter) {
+	v.val = string(g.val)
+}
+
+func (v *ValueVisitor) visitCnty(g *CntyGetter) {
 	v.val = string(g.val)
 }
