@@ -111,3 +111,30 @@ category_mode_choice()
                 break
         done
 }
+
+category_operator_choice()
+{
+        PS3='Select operator category: '
+        select category_operator in SINGLE-OP MULTI-OP CHECKLOG; do
+                echo $category_operator
+                break
+        done
+}
+
+power_choice()
+{
+        PS3='Select power category: '
+        select power in HIGH LOW QRP; do
+                echo $power
+                break
+        done
+}
+
+station_choice()
+{
+        PS3='Select station category: '
+        select station in DISTRIBUTED FIXED MOBILE PORTABLE ROVER ROVER-LIMITED ROVER-UNLIMITED EXPEDITION HQ SCHOOL EXPLORER; do
+                echo $station
+                break
+        done
+}

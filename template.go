@@ -128,6 +128,11 @@ var (
 			func() FieldGetter { return &MySotaRefGetter{} },
 			fmt.Sprintf("%v\t- the logging station's International SOTA Reference.", MY_SOTA_REF),
 		},
+		MY_STATE: FieldHandlers{
+			func() FieldSetter { return MyStateSetter },
+			func() FieldGetter { return &MyStateGetter{} },
+			fmt.Sprintf("%v\t- the logging station's state.", MY_STATE),
+		},
 	}
 )
 

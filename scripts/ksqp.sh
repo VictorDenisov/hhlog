@@ -1,5 +1,7 @@
 #!/bin/bash
 
+log_file=$1
+
 source commons.sh
 section=$(section_choice)
 echo "Your location is: $section"
@@ -10,28 +12,64 @@ read callsign
 mode=$(category_mode_choice)
 echo "Mode: $mode"
 
+op_category=$(category_operator_choice)
+echo "Operator: $op_category"
+
+power=$(power_choice)
+echo "Power: $power"
+
+station=$(station_choice)
+echo "Station: $station"
+
+echo "Enter your full name"
+read full_name
+
+echo "Enter your address"
+read address
+
+echo "Enter your city"
+read city
+
+echo "Enter your two letter state"
+read state
+
+echo "Enter your postal code"
+read postal_code
+
+echo "Enter your country"
+read country
+
+echo "Enter your email"
+read email
+
 cat << _end_of_text_ > log.txt
 START-OF-LOG: 3.0
 CONTEST: KS-QSO-PARTY
 LOCATION: $section
 CALLSIGN: $callsign
 CATEGORY-BAND: ALL
-CATEGORY-MODE: CW
-CATEGORY-OPERATOR: SINGLE-OP
-CATEGORY-POWER: LOW
-CATEGORY-STATION: PORTABLE
+CATEGORY-MODE: $mode
+CATEGORY-OPERATOR: $op_category
+CATEGORY-POWER: $power
+CATEGORY-STATION: $station
 CLAIMED-SCORE:
 CREATED-BY: hhlog
-NAME: Victor Denisov
-ADDRESS: 1948 PO BOX
-ADDRESS-CITY: novato
-ADDRESS-STATE-PROVINCE: CA
-ADDRESS-POSTALCODE: 94948
-ADDRESS-COUNTRY: USA
-EMAIL: denisovenator@gmail.com
+NAME: $full_name
+ADDRESS: $address
+ADDRESS-CITY: $city
+ADDRESS-STATE-PROVINCE: $state
+ADDRESS-POSTALCODE: $postal_code
+ADDRESS-COUNTRY: $country
+EMAIL: $email
 OPERATORS:
 SOAPBOX: 
+_end_of_text_
+
+hhlog
+
 QSO: 14000 CW 2022-08-27 1400 N6DVS         559 CA     W0BH          59  JAC    
+
+cat << _end_of_text_ >> log.txt
 END-OF-LOG:
 _end_of_text_
 
