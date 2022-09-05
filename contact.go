@@ -149,6 +149,7 @@ var (
 )
 
 type FieldGetterVisitor interface {
+	visitLiteral(g *LiteralGetter)
 	visitFrequency(g *FrequencyGetter)
 	visitCall(g *CallGetter)
 	visitDate(g *DateGetter)
@@ -188,6 +189,18 @@ func (g *FrequencyGetter) get(c *Contact) {
 
 func (g *FrequencyGetter) accept(v FieldGetterVisitor) {
 	v.visitFrequency(g)
+}
+
+type LiteralGetter struct {
+	fieldName string
+	val       string
+}
+
+func (g *LiteralGetter) get(c *Contact) {
+}
+
+func (g *LiteralGetter) accept(v FieldGetterVisitor) {
+	v.visitLiteral(g)
 }
 
 type CallGetter struct {

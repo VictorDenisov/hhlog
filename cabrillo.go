@@ -6,7 +6,6 @@ import (
 )
 
 func renderCabrillo(getters []FieldGetter, contacts []Contact) {
-	fmt.Printf("START-OF-LOG: 3.0\n")
 	for _, c := range contacts {
 		fmt.Printf("QSO: ")
 		for _, g := range getters {
@@ -17,7 +16,6 @@ func renderCabrillo(getters []FieldGetter, contacts []Contact) {
 		}
 		fmt.Printf("\n")
 	}
-	fmt.Printf("END-OF-LOG:\n")
 }
 
 func NewCabrilloFieldPrinter() *CabrilloFieldPrinter {
@@ -30,6 +28,10 @@ type CabrilloFieldPrinter struct {
 
 func (v *CabrilloFieldPrinter) printField() {
 	fmt.Printf("%v\t", v.valueVisitor.val)
+}
+
+func (v *CabrilloFieldPrinter) visitLiteral(g *LiteralGetter) {
+	g.accept(v.valueVisitor)
 }
 
 func (v *CabrilloFieldPrinter) visitFrequency(g *FrequencyGetter) {

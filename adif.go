@@ -38,6 +38,11 @@ func (v *AdifFieldPrinter) printField(f *os.File) {
 	fmt.Fprintf(f, "<%v:%v>%v\n", v.field, len(v.valueVisitor.val), v.valueVisitor.val)
 }
 
+func (v *AdifFieldPrinter) visitLiteral(g *LiteralGetter) {
+	v.field = g.fieldName
+	g.accept(v.valueVisitor)
+}
+
 func (v *AdifFieldPrinter) visitFrequency(g *FrequencyGetter) {
 	v.field = "FREQ"
 	g.accept(v.valueVisitor)

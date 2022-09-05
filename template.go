@@ -187,17 +187,25 @@ func parseWritingTemplate(line string) ([]FieldGetter, error) {
 	verbs := strings.Split(line, " ")
 	getters := make([]FieldGetter, len(verbs))
 	for i, v := range verbs {
-		templateHanlder, ok := templateHandlers[v]
-		if !ok {
-			return nil, fmt.Errorf("Unknown verb: %v", v)
+		if v[0] != '%' {
+			getters[i] = &LiteralGetter{fieldName: "Unknown", val: v}
+		} else {
+			templateHanlder, ok := templateHandlers[v]
+			if !ok {
+				return nil, fmt.Errorf("Unknown verb: %v", v)
+			}
+			getters[i] = templateHanlder.getter()
 		}
-		getters[i] = templateHanlder.getter()
 	}
 	return getters, nil
 }
 
 type ValueVisitor struct {
 	val string
+}
+
+func (v *ValueVisitor) visitLiteral(g *LiteralGetter) {
+	v.val = string(g.val)
 }
 
 func (v *ValueVisitor) visitFrequency(g *FrequencyGetter) {

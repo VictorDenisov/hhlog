@@ -66,7 +66,7 @@ OPERATORS:
 SOAPBOX: 
 _end_of_text_
 
-hhlog -in $log_file -out cbr -tpl "%b %m %d %t %c %rst_rcvd %cnty" >> $file.cab
+hhlog -in $log_file -out cbr -tpl "%b %m %d %t $callsign %rst_sent %my_state %c %rst_rcvd %cnty" >> $file.cab
 
 cat << _end_of_text_ >> $file.cab
 END-OF-LOG:

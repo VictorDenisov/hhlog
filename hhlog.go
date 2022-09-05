@@ -50,6 +50,10 @@ func (v *HhlogFieldPrinter) printField(f *os.File) {
 	fmt.Fprintf(f, "%v\t", v.valueVisitor.val)
 }
 
+func (v *HhlogFieldPrinter) visitLiteral(g *LiteralGetter) {
+	g.accept(v.valueVisitor)
+}
+
 func (v *HhlogFieldPrinter) visitFrequency(g *FrequencyGetter) {
 	g.accept(v.valueVisitor)
 }
@@ -143,6 +147,10 @@ type HhlogFieldNamePrinter struct {
 
 func (v *HhlogFieldNamePrinter) printField(f *os.File) {
 	fmt.Fprintf(f, "%v\t", v.fieldName)
+}
+
+func (v *HhlogFieldNamePrinter) visitLiteral(g *LiteralGetter) {
+	v.fieldName = g.fieldName
 }
 
 func (v *HhlogFieldNamePrinter) visitFrequency(g *FrequencyGetter) {
