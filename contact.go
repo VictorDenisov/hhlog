@@ -263,6 +263,12 @@ func (g *BandGetter) get(c *Contact) {
 	if strings.HasPrefix(f, "14") {
 		g.val = "20M"
 	}
+	if strings.HasPrefix(f, "3") {
+		g.val = "80M"
+	}
+	if strings.HasPrefix(f, "28") || strings.HasPrefix(f, "29") {
+		g.val = "10M"
+	}
 }
 
 func (g *BandGetter) accept(v FieldGetterVisitor) {
