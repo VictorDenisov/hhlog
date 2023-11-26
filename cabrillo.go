@@ -129,3 +129,7 @@ func (v *CabrilloFieldPrinter) visitCnty(g *CntyGetter) {
 func (v *CabrilloFieldPrinter) visitMyCall(g *MyCallGetter) {
 	g.accept(v.valueVisitor)
 }
+
+func (v *CabrilloFieldPrinter) visitMyPotaRef(g *MyPotaRefGetter) {
+	g.accept(v.valueVisitor)
+}

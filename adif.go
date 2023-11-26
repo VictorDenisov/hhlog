@@ -147,3 +147,8 @@ func (v *AdifFieldPrinter) visitMyCall(g *MyCallGetter) {
 	v.field = "MY_CALL"
 	g.accept(v.valueVisitor)
 }
+
+func (v *AdifFieldPrinter) visitMyPotaRef(g *MyPotaRefGetter) {
+	v.field = "MY_POTA_REF"
+	g.accept(v.valueVisitor)
+}

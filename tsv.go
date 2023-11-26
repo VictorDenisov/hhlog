@@ -127,3 +127,7 @@ func (fp *TsvFieldPrinter) visitCnty(g *CntyGetter) {
 func (fp *TsvFieldPrinter) visitMyCall(g *MyCallGetter) {
 	g.accept(fp.valueVisitor)
 }
+
+func (fp *TsvFieldPrinter) visitMyPotaRef(g *MyPotaRefGetter) {
+	g.accept(fp.valueVisitor)
+}

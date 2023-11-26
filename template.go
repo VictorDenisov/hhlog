@@ -27,6 +27,7 @@ const (
 	MY_STATE    = "%my_state"
 	CNTY        = "%cnty"
 	MY_CALL     = "%my_call"
+	MY_POTA_REF = "%my_pota_ref"
 )
 
 type FieldHandlers struct {
@@ -144,6 +145,11 @@ var (
 			func() FieldSetter { return MyCallSetter },
 			func() FieldGetter { return &MyCallGetter{} },
 			fmt.Sprintf("%v\t- the logging station's Call Sign", MY_CALL),
+		},
+		MY_POTA_REF: FieldHandlers{
+			func() FieldSetter { return MyPotaRefSetter },
+			func() FieldGetter { return &MyPotaRefGetter{} },
+			fmt.Sprintf("%v\t- the logging station's POTA reference", MY_POTA_REF),
 		},
 	}
 )
@@ -295,5 +301,9 @@ func (v *ValueVisitor) visitCnty(g *CntyGetter) {
 }
 
 func (v *ValueVisitor) visitMyCall(g *MyCallGetter) {
+	v.val = string(g.val)
+}
+
+func (v *ValueVisitor) visitMyPotaRef(g *MyPotaRefGetter) {
 	v.val = string(g.val)
 }
