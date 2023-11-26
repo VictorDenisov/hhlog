@@ -142,3 +142,8 @@ func (v *AdifFieldPrinter) visitCnty(g *CntyGetter) {
 	v.field = "CNTY"
 	g.accept(v.valueVisitor)
 }
+
+func (v *AdifFieldPrinter) visitMyCall(g *MyCallGetter) {
+	v.field = "MY_CALL"
+	g.accept(v.valueVisitor)
+}

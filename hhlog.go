@@ -141,6 +141,10 @@ func (v *HhlogFieldPrinter) visitCnty(g *CntyGetter) {
 	g.accept(v.valueVisitor)
 }
 
+func (v *HhlogFieldPrinter) visitMyCall(g *MyCallGetter) {
+	g.accept(v.valueVisitor)
+}
+
 type HhlogFieldNamePrinter struct {
 	fieldName string
 }
@@ -231,4 +235,8 @@ func (v *HhlogFieldNamePrinter) visitMyState(g *MyStateGetter) {
 
 func (v *HhlogFieldNamePrinter) visitCnty(g *CntyGetter) {
 	v.fieldName = CNTY
+}
+
+func (v *HhlogFieldNamePrinter) visitMyCall(g *MyCallGetter) {
+	v.fieldName = MY_CALL
 }

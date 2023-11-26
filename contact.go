@@ -24,6 +24,7 @@ type State string
 type MySotaRef string
 type MyState string
 type Cnty string
+type MyCall string
 
 func (t Time) Valid() error {
 	if len(t) != 4 {
@@ -85,6 +86,7 @@ type Contact struct {
 	MySotaRef MySotaRef
 	MyState   MyState
 	Cnty      Cnty
+	MyCall    MyCall
 }
 
 type FieldSetter func(c *Contact, s string)
@@ -146,6 +148,9 @@ var (
 	CntySetter = func(c *Contact, s string) {
 		c.Cnty = Cnty(s)
 	}
+	MyCallSetter = func(c *Contact, s string) {
+		c.MyCall = MyCall(s)
+	}
 )
 
 type FieldGetterVisitor interface {
@@ -170,6 +175,7 @@ type FieldGetterVisitor interface {
 	visitMySotaRef(g *MySotaRefGetter)
 	visitMyState(g *MyStateGetter)
 	visitCnty(g *CntyGetter)
+	visitMyCall(g *MyCallGetter)
 }
 
 type FieldGetter interface {
@@ -458,4 +464,16 @@ func (g *CntyGetter) get(c *Contact) {
 
 func (g *CntyGetter) accept(v FieldGetterVisitor) {
 	v.visitCnty(g)
+}
+
+type MyCallGetter struct {
+	val MyCall
+}
+
+func (g *MyCallGetter) get(c *Contact) {
+	g.val = c.MyCall
+}
+
+func (g *MyCallGetter) accept(v FieldGetterVisitor) {
+	v.visitMyCall(g)
 }

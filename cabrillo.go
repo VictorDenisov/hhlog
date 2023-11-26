@@ -125,3 +125,7 @@ func (v *CabrilloFieldPrinter) visitMyState(g *MyStateGetter) {
 func (v *CabrilloFieldPrinter) visitCnty(g *CntyGetter) {
 	g.accept(v.valueVisitor)
 }
+
+func (v *CabrilloFieldPrinter) visitMyCall(g *MyCallGetter) {
+	g.accept(v.valueVisitor)
+}

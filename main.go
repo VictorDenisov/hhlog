@@ -10,6 +10,7 @@ const (
 	ADIF     = "adi"
 	CABRILLO = "cbr"
 	HHLOG    = "hhl"
+	TSV      = "tsv"
 )
 
 func main() {
@@ -104,9 +105,11 @@ The name of the input file should have the following structure: <CALLSIGN>@<PARK
 		renderCabrillo(getters, contacts)
 	case HHLOG:
 		renderHhlog(os.Stdout, getters, contacts)
+	case TSV:
+		renderTsv(os.Stdout, getters, contacts)
 	default:
 		fmt.Fprintf(os.Stderr, "Unknown output format: %v\n", outFormat)
-		fmt.Fprintf(os.Stderr, "Allowed formats are: %v, %v, %v\n", ADIF, CABRILLO, HHLOG)
+		fmt.Fprintf(os.Stderr, "Allowed formats are: %v, %v, %v, %v\n", ADIF, CABRILLO, HHLOG, TSV)
 		os.Exit(1)
 	}
 }
