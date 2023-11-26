@@ -24,7 +24,7 @@ func main() {
 		calcSkcc  bool
 	)
 
-	flag.StringVar(&outFormat, "out", "", fmt.Sprintf("Output format: %v, %v, %v", ADIF, CABRILLO, HHLOG))
+	flag.StringVar(&outFormat, "out", "", fmt.Sprintf("Output format: %v, %v, %v, %v", ADIF, CABRILLO, HHLOG, TSV))
 	flag.StringVar(&template, "tpl", "", `Output template.
 
 `+templateDoc())
