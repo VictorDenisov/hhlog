@@ -62,13 +62,13 @@ var (
 		MODE: FieldHandlers{
 			func() FieldSetter { return ModeSetter },
 			func() FieldGetter { return &ModeGetter{} },
-			fmt.Sprintf("%v\t- band", BAND),
+			fmt.Sprintf("%v\t- mode", MODE),
 		},
 		BAND: FieldHandlers{
 			//func() FieldSetter { return BandSetter },
 			nil,
 			func() FieldGetter { return &BandGetter{} },
-			fmt.Sprintf("%v\t- band", MODE),
+			fmt.Sprintf("%v\t- band", BAND),
 		},
 		SKCC: FieldHandlers{
 			func() FieldSetter { return SkccSetter },
