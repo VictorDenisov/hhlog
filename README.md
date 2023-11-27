@@ -12,10 +12,10 @@ contacts into a computer. Jumping between lots of text fields that usually make
 up interfaces of most of ham logging software is not fun and is not exactly the
 fastest way to do it.
 
-This logger allows you to type the fields that you have in a tab separated file.
-Vim editor is very efficient in dealing with tab separated files. Then you
-invoke the logger with the template that you want to serialize into an ADIF file
-and you are good to upload your logs to POTA or LOTW.
+This logger allows you to organize your contacts into a tab separated file with
+flexible format. Vim editor is very efficient in dealing with tab separated
+files. Then you invoke the logger with the template that you want to serialize
+into an ADIF file and you are good to upload your logs to POTA or LOTW.
 
 There are plans to add command line interface to this logger for logging during
 contests. Again no jumping between text fields is expected. Type in only the
@@ -30,24 +30,39 @@ New features are announced in this group.
 Usage
 =====
 
-Right the main purpose of hhlog is to convert tab separated files into ADIF
-files. ADIF files are very nicely formatted, but they are not very convenient
-to be typed in by a user.
+Hhlog is best suited for converting tab separated files into various formats:
+ADIF, cabrillo, TSV(sota submission format).
 
-You can enter the values that are variable - call sign, time. It takes little
-time to type in these values from your field note book. Then you can add
-missing columns using Vim's vertical selection feature - Ctrl - v.
+On the first line of your file specify the header - the format of the file.
+Place fields strategically from most frequently changed to the least frequently
+changed. If your format specifies 10 fields and a line contains only 5 then the
+logger assumes that those 5 are the first 5 and fills the remaining fields with
+the last specified values from the lines above. The header is a commented line
+with tab separated flags. Currently the following flags are supported:
 
-Specify in the header of your file the format of the file.
-The header is a commented line with tab separated flags.
-Currently only these flags are supported:
+ - %skcc	- skcc number
+ - %stx	- contest QSO transmitted serial number with a value greater than or equal to 0
+ - %my_sota_ref	- the logging station's International SOTA Reference.
+ - %cnty	- the contacted station's Secondary Administrative Subdivision (e.g. US county)
+ - %d	- eight digits of date without spaces: year month day
+ - %b	- band
+ - %srx	- contest QSO received serial number with a value greater than or equal to 0
+ - %my_call	- the logging station's Call Sign
+ - %rst_rcvd	- signal report from the contacted station
+ - %rst_sent	- signal report sent to the contacted station
+ - %c	- call sign
+ - %t	- four digits of UTC time
+ - %m	- mode
+ - %spc	- skcc spc
+ - %ck	- contest check
+ - %sect	- the contacted station's ARRL section
+ - %my_state	- the logging station's state.
+ - %f	- frequency in megahertz
+ - %n	- the contacted station's operator name
+ - %prec	- contest precedence
+ - %state	- the code for the contacted station's Primary Administrative Subdivision (e.g. US State, JA Island, VE Province)
+ - %my_pota_ref	- the logging station's POTA reference
 
- - %f - frequency in megahertz
- - %c - call sign
- - %d - date. It's an eight digit value: year month day.
- - %t - time. It's a four digit UTC time: 24 hour, minute.
- - %b - band. It doesn't need to be specified, but can be used in the output template.
- - %m - mode.
 
 Sample input file:
 ```
@@ -58,17 +73,22 @@ q2bro	1120
 q3bro	1130
 ```
 
-After this you can excute hhlog to generate your ADIF file:
+After this you can execute hhlog to generate your ADIF file:
 
 ```
 ./hhlog -in input.hhl -out "adi" -tpl "%c %t"
 ```
 
-The input files can have extension hhl. They are plain text files and you can
-check them into a git repo(github or bitbucket). Text files are convenient to be
-inspected without any extra app.
+Conventionally input files have extension hhl, though it's not important. They
+are plain text files and you can check them into a git repo(github or
+bitbucket). Text files are convenient to be inspected without any extra app.
 
-Currently two output types are supported: adi and cbr.
+Currently four output types are supported:
+
+ - adi - adif format
+ - cbr - cabrillo format
+ - hhl - hhlog file format
+ - tsv - tab separated file for sota submissions
 
 Logs can be stored as plain files in hhl format and then converted to adi or cbr
 as necessary.
