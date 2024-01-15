@@ -157,3 +157,8 @@ func (v *AdifFieldPrinter) visitOperator(g *OperatorGetter) {
 	v.field = "OPERATOR"
 	g.accept(v.valueVisitor)
 }
+
+func (v *AdifFieldPrinter) visitStationCall(g *StationCallGetter) {
+	v.field = "STATION_CALLSIGN"
+	g.accept(v.valueVisitor)
+}

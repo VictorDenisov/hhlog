@@ -6,29 +6,30 @@ import (
 )
 
 const (
-	FREQUENCY   = "%f"
-	CALL        = "%c"
-	DATE        = "%d"
-	TIME        = "%t"
-	BAND        = "%b"
-	MODE        = "%m"
-	SKCC        = "%skcc"
-	NAME        = "%n"
-	SPC         = "%spc"
-	SRX         = "%srx"
-	STX         = "%stx"
-	PREC        = "%prec"
-	CK          = "%ck"
-	SECT        = "%sect"
-	RST_RCVD    = "%rst_rcvd"
-	RST_SENT    = "%rst_sent"
-	STATE       = "%state"
-	MY_SOTA_REF = "%my_sota_ref"
-	MY_STATE    = "%my_state"
-	CNTY        = "%cnty"
-	MY_CALL     = "%my_call"
-	MY_POTA_REF = "%my_pota_ref"
-	OPERATOR    = "%op"
+	FREQUENCY    = "%f"
+	CALL         = "%c"
+	DATE         = "%d"
+	TIME         = "%t"
+	BAND         = "%b"
+	MODE         = "%m"
+	SKCC         = "%skcc"
+	NAME         = "%n"
+	SPC          = "%spc"
+	SRX          = "%srx"
+	STX          = "%stx"
+	PREC         = "%prec"
+	CK           = "%ck"
+	SECT         = "%sect"
+	RST_RCVD     = "%rst_rcvd"
+	RST_SENT     = "%rst_sent"
+	STATE        = "%state"
+	MY_SOTA_REF  = "%my_sota_ref"
+	MY_STATE     = "%my_state"
+	CNTY         = "%cnty"
+	MY_CALL      = "%my_call"
+	MY_POTA_REF  = "%my_pota_ref"
+	OPERATOR     = "%op"
+	STATION_CALL = "%station_call"
 )
 
 type FieldHandlers struct {
@@ -155,7 +156,12 @@ var (
 		OPERATOR: FieldHandlers{
 			func() FieldSetter { return OperatorSetter },
 			func() FieldGetter { return &OperatorGetter{} },
-			fmt.Sprintf("%v\t- the logging station's POTA reference", MY_POTA_REF),
+			fmt.Sprintf("%v\t- the logging station's POTA reference", OPERATOR),
+		},
+		STATION_CALL: FieldHandlers{
+			func() FieldSetter { return StationSetter },
+			func() FieldGetter { return &StationCallGetter{} },
+			fmt.Sprintf("%v\t- the logging station's POTA reference", STATION_CALL),
 		},
 	}
 )
@@ -315,5 +321,9 @@ func (v *ValueVisitor) visitMyPotaRef(g *MyPotaRefGetter) {
 }
 
 func (v *ValueVisitor) visitOperator(g *OperatorGetter) {
+	v.val = string(g.val)
+}
+
+func (v *ValueVisitor) visitStationCall(g *StationCallGetter) {
 	v.val = string(g.val)
 }

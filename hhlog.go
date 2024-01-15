@@ -153,6 +153,10 @@ func (v *HhlogFieldPrinter) visitOperator(g *OperatorGetter) {
 	g.accept(v.valueVisitor)
 }
 
+func (v *HhlogFieldPrinter) visitStationCall(g *StationCallGetter) {
+	g.accept(v.valueVisitor)
+}
+
 type HhlogFieldNamePrinter struct {
 	fieldName string
 }
@@ -255,4 +259,8 @@ func (v *HhlogFieldNamePrinter) visitMyPotaRef(g *MyPotaRefGetter) {
 
 func (v *HhlogFieldNamePrinter) visitOperator(g *OperatorGetter) {
 	v.fieldName = OPERATOR
+}
+
+func (v *HhlogFieldNamePrinter) visitStationCall(g *StationCallGetter) {
+	v.fieldName = STATION_CALL
 }

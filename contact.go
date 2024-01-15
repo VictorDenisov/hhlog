@@ -27,6 +27,7 @@ type Cnty string
 type MyCall string
 type MyPotaRef string
 type Operator string
+type StationCall string
 
 func (t Time) Valid() error {
 	if len(t) != 4 {
@@ -70,27 +71,28 @@ func (d Date) Valid() error {
 // Implementation of read contacts relies on the fact that fields of this
 // structure are immutable.
 type Contact struct {
-	Frequency Frequency
-	Call      Call
-	Date      Date
-	Time      Time
-	Mode      Mode
-	Skcc      Skcc
-	Spc       Spc
-	Srx       Srx
-	Stx       Stx
-	Prec      Prec
-	Ck        Ck
-	Sect      Sect
-	RstRcvd   RstRcvd
-	RstSent   RstSent
-	State     State
-	MySotaRef MySotaRef
-	MyState   MyState
-	Cnty      Cnty
-	MyCall    MyCall
-	MyPotaRef MyPotaRef
-	Operator  Operator
+	Frequency   Frequency
+	Call        Call
+	Date        Date
+	Time        Time
+	Mode        Mode
+	Skcc        Skcc
+	Spc         Spc
+	Srx         Srx
+	Stx         Stx
+	Prec        Prec
+	Ck          Ck
+	Sect        Sect
+	RstRcvd     RstRcvd
+	RstSent     RstSent
+	State       State
+	MySotaRef   MySotaRef
+	MyState     MyState
+	Cnty        Cnty
+	MyCall      MyCall
+	MyPotaRef   MyPotaRef
+	Operator    Operator
+	StationCall StationCall
 }
 
 type FieldSetter func(c *Contact, s string)
@@ -161,6 +163,9 @@ var (
 	OperatorSetter = func(c *Contact, s string) {
 		c.Operator = Operator(s)
 	}
+	StationSetter = func(c *Contact, s string) {
+		c.StationCall = StationCall(s)
+	}
 )
 
 type FieldGetterVisitor interface {
@@ -188,6 +193,7 @@ type FieldGetterVisitor interface {
 	visitMyCall(g *MyCallGetter)
 	visitMyPotaRef(g *MyPotaRefGetter)
 	visitOperator(g *OperatorGetter)
+	visitStationCall(g *StationCallGetter)
 }
 
 type FieldGetter interface {
@@ -512,4 +518,16 @@ func (g *OperatorGetter) get(c *Contact) {
 
 func (g *OperatorGetter) accept(v FieldGetterVisitor) {
 	v.visitOperator(g)
+}
+
+type StationCallGetter struct {
+	val StationCall
+}
+
+func (g *StationCallGetter) get(c *Contact) {
+	g.val = c.StationCall
+}
+
+func (g *StationCallGetter) accept(v FieldGetterVisitor) {
+	v.visitStationCall(g)
 }

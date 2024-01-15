@@ -135,3 +135,7 @@ func (fp *TsvFieldPrinter) visitMyPotaRef(g *MyPotaRefGetter) {
 func (fp *TsvFieldPrinter) visitOperator(g *OperatorGetter) {
 	g.accept(fp.valueVisitor)
 }
+
+func (fp *TsvFieldPrinter) visitStationCall(g *StationCallGetter) {
+	g.accept(fp.valueVisitor)
+}
