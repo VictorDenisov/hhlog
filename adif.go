@@ -152,3 +152,8 @@ func (v *AdifFieldPrinter) visitMyPotaRef(g *MyPotaRefGetter) {
 	v.field = "MY_POTA_REF"
 	g.accept(v.valueVisitor)
 }
+
+func (v *AdifFieldPrinter) visitOperator(g *OperatorGetter) {
+	v.field = "OPERATOR"
+	g.accept(v.valueVisitor)
+}

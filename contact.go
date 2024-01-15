@@ -26,6 +26,7 @@ type MyState string
 type Cnty string
 type MyCall string
 type MyPotaRef string
+type Operator string
 
 func (t Time) Valid() error {
 	if len(t) != 4 {
@@ -89,6 +90,7 @@ type Contact struct {
 	Cnty      Cnty
 	MyCall    MyCall
 	MyPotaRef MyPotaRef
+	Operator  Operator
 }
 
 type FieldSetter func(c *Contact, s string)
@@ -156,6 +158,9 @@ var (
 	MyPotaRefSetter = func(c *Contact, s string) {
 		c.MyPotaRef = MyPotaRef(s)
 	}
+	OperatorSetter = func(c *Contact, s string) {
+		c.Operator = Operator(s)
+	}
 )
 
 type FieldGetterVisitor interface {
@@ -182,6 +187,7 @@ type FieldGetterVisitor interface {
 	visitCnty(g *CntyGetter)
 	visitMyCall(g *MyCallGetter)
 	visitMyPotaRef(g *MyPotaRefGetter)
+	visitOperator(g *OperatorGetter)
 }
 
 type FieldGetter interface {
@@ -494,4 +500,16 @@ func (g *MyPotaRefGetter) get(c *Contact) {
 
 func (g *MyPotaRefGetter) accept(v FieldGetterVisitor) {
 	v.visitMyPotaRef(g)
+}
+
+type OperatorGetter struct {
+	val Operator
+}
+
+func (g *OperatorGetter) get(c *Contact) {
+	g.val = c.Operator
+}
+
+func (g *OperatorGetter) accept(v FieldGetterVisitor) {
+	v.visitOperator(g)
 }
