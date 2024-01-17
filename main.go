@@ -15,19 +15,21 @@ const (
 
 func main() {
 	var (
-		outFormat string
-		inFile    StringArray
-		template  string
-		filter    string
-		parkName  string
-		sendPota  bool
-		calcSkcc  bool
+		outFormat  string
+		inFile     StringArray
+		template   string
+		filter     string
+		parkName   string
+		sendPota   bool
+		calcSkcc   bool
+		outputFile string
 	)
 
 	flag.StringVar(&outFormat, "out", "", fmt.Sprintf("Output format: %v, %v, %v, %v", ADIF, CABRILLO, HHLOG, TSV))
 	flag.StringVar(&template, "tpl", "", `Output template.
 
 `+templateDoc())
+	flag.StringVar(&outputFile, "output-file", "", "Print to file")
 	flag.Var(&inFile, "in", "Input file")
 	flag.StringVar(&filter, "filter", "", "Filter for QSOs")
 	flag.BoolVar(&sendPota, "send-pota", false, `This flag will take the input and convert it into a file suitable for pota and wwff.
@@ -98,15 +100,24 @@ The name of the input file should have the following structure: <CALLSIGN>@<PARK
 		os.Exit(1)
 	}
 
+	outF := os.Stdout
+	if len(outputFile) != 0 {
+		outF, err = os.Create(outputFile)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Failed to create output file: %s\n", outputFile)
+			os.Exit(1)
+		}
+	}
+
 	switch outFormat {
 	case ADIF:
-		renderAdif(os.Stdout, getters, contacts)
+		renderAdif(outF, getters, contacts)
 	case CABRILLO:
-		renderCabrillo(getters, contacts)
+		renderCabrillo(outF, getters, contacts)
 	case HHLOG:
-		renderHhlog(os.Stdout, getters, contacts)
+		renderHhlog(outF, getters, contacts)
 	case TSV:
-		renderTsv(os.Stdout, getters, contacts)
+		renderTsv(outF, getters, contacts)
 	default:
 		fmt.Fprintf(os.Stderr, "Unknown output format: %v\n", outFormat)
 		fmt.Fprintf(os.Stderr, "Allowed formats are: %v, %v, %v, %v\n", ADIF, CABRILLO, HHLOG, TSV)
