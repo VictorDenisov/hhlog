@@ -2,19 +2,20 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"strings"
 )
 
-func renderCabrillo(getters []FieldGetter, contacts []Contact) {
+func renderCabrillo(f *os.File, getters []FieldGetter, contacts []Contact) {
 	for _, c := range contacts {
-		fmt.Printf("QSO: ")
+		fmt.Fprintf(f, "QSO: ")
 		for _, g := range getters {
 			fp := NewCabrilloFieldPrinter()
 			g.get(&c)
 			g.accept(fp)
-			fp.printField()
+			fp.printField(f)
 		}
-		fmt.Printf("\n")
+		fmt.Fprintf(f, "\n")
 	}
 }
 
@@ -26,8 +27,8 @@ type CabrilloFieldPrinter struct {
 	valueVisitor *ValueVisitor
 }
 
-func (v *CabrilloFieldPrinter) printField() {
-	fmt.Printf("%v\t", v.valueVisitor.val)
+func (v *CabrilloFieldPrinter) printField(f *os.File) {
+	fmt.Fprintf(f, "%v\t", v.valueVisitor.val)
 }
 
 func (v *CabrilloFieldPrinter) visitLiteral(g *LiteralGetter) {
