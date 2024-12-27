@@ -22,7 +22,7 @@ func submitPotaReport(inFile []string, contacts []Contact, config *Config, parkN
 
 	callSign, parkCode, date := parseInputFile(inFile[0])
 
-	potaFileName := fmt.Sprintf("%v@K-%v-%v.adi", callSign, parkCode, date)
+	potaFileName := fmt.Sprintf("%v@US-%v-%v.adi", callSign, parkCode, date)
 	wwffFileName := fmt.Sprintf("%v@KFF-%v-%v.adi", callSign, parkCode, date)
 
 	f, err := os.Create(potaFileName)
