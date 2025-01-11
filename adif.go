@@ -133,6 +133,11 @@ func (v *AdifFieldPrinter) visitMySotaRef(g *MySotaRefGetter) {
 	g.accept(v.valueVisitor)
 }
 
+func (v *AdifFieldPrinter) visitSotaRef(g *SotaRefGetter) {
+	v.field = "SOTA_REF"
+	g.accept(v.valueVisitor)
+}
+
 func (v *AdifFieldPrinter) visitMyState(g *MyStateGetter) {
 	v.field = "MY_STATE"
 	g.accept(v.valueVisitor)

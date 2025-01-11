@@ -22,6 +22,7 @@ type RstRcvd string
 type RstSent string
 type State string
 type MySotaRef string
+type SotaRef string
 type MyState string
 type Cnty string
 type MyCall string
@@ -87,6 +88,7 @@ type Contact struct {
 	RstSent     RstSent
 	State       State
 	MySotaRef   MySotaRef
+	SotaRef     SotaRef
 	MyState     MyState
 	Cnty        Cnty
 	MyCall      MyCall
@@ -148,6 +150,9 @@ var (
 	MySotaRefSetter = func(c *Contact, s string) {
 		c.MySotaRef = MySotaRef(s)
 	}
+	SotaRefSetter = func(c *Contact, s string) {
+		c.SotaRef = SotaRef(s)
+	}
 	MyStateSetter = func(c *Contact, s string) {
 		c.MyState = MyState(s)
 	}
@@ -188,6 +193,7 @@ type FieldGetterVisitor interface {
 	visitRstSent(g *RstSentGetter)
 	visitState(g *StateGetter)
 	visitMySotaRef(g *MySotaRefGetter)
+	visitSotaRef(g *SotaRefGetter)
 	visitMyState(g *MyStateGetter)
 	visitCnty(g *CntyGetter)
 	visitMyCall(g *MyCallGetter)
@@ -458,6 +464,18 @@ func (g *MySotaRefGetter) get(c *Contact) {
 
 func (g *MySotaRefGetter) accept(v FieldGetterVisitor) {
 	v.visitMySotaRef(g)
+}
+
+type SotaRefGetter struct {
+	val SotaRef
+}
+
+func (g *SotaRefGetter) get(c *Contact) {
+	g.val = c.SotaRef
+}
+
+func (g *SotaRefGetter) accept(v FieldGetterVisitor) {
+	v.visitSotaRef(g)
 }
 
 type MyStateGetter struct {

@@ -133,6 +133,10 @@ func (v *HhlogFieldPrinter) visitMySotaRef(g *MySotaRefGetter) {
 	g.accept(v.valueVisitor)
 }
 
+func (v *HhlogFieldPrinter) visitSotaRef(g *SotaRefGetter) {
+	g.accept(v.valueVisitor)
+}
+
 func (v *HhlogFieldPrinter) visitMyState(g *MyStateGetter) {
 	g.accept(v.valueVisitor)
 }
@@ -239,6 +243,10 @@ func (v *HhlogFieldNamePrinter) visitState(g *StateGetter) {
 
 func (v *HhlogFieldNamePrinter) visitMySotaRef(g *MySotaRefGetter) {
 	v.fieldName = MY_SOTA_REF
+}
+
+func (v *HhlogFieldNamePrinter) visitSotaRef(g *SotaRefGetter) {
+	v.fieldName = SOTA_REF
 }
 
 func (v *HhlogFieldNamePrinter) visitMyState(g *MyStateGetter) {

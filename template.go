@@ -24,6 +24,7 @@ const (
 	RST_SENT     = "%rst_sent"
 	STATE        = "%state"
 	MY_SOTA_REF  = "%my_sota_ref"
+	SOTA_REF     = "%sota_ref"
 	MY_STATE     = "%my_state"
 	CNTY         = "%cnty"
 	MY_CALL      = "%my_call"
@@ -132,6 +133,11 @@ var (
 			func() FieldSetter { return MySotaRefSetter },
 			func() FieldGetter { return &MySotaRefGetter{} },
 			fmt.Sprintf("%v\t- the logging station's International SOTA Reference.", MY_SOTA_REF),
+		},
+		SOTA_REF: FieldHandlers{
+			func() FieldSetter { return SotaRefSetter },
+			func() FieldGetter { return &SotaRefGetter{} },
+			fmt.Sprintf("%v\t- the contacted station's International SOTA Reference.", SOTA_REF),
 		},
 		MY_STATE: FieldHandlers{
 			func() FieldSetter { return MyStateSetter },
@@ -301,6 +307,10 @@ func (v *ValueVisitor) visitState(g *StateGetter) {
 }
 
 func (v *ValueVisitor) visitMySotaRef(g *MySotaRefGetter) {
+	v.val = string(g.val)
+}
+
+func (v *ValueVisitor) visitSotaRef(g *SotaRefGetter) {
 	v.val = string(g.val)
 }
 

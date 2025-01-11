@@ -118,6 +118,10 @@ func (v *CabrilloFieldPrinter) visitMySotaRef(g *MySotaRefGetter) {
 	g.accept(v.valueVisitor)
 }
 
+func (v *CabrilloFieldPrinter) visitSotaRef(g *SotaRefGetter) {
+	g.accept(v.valueVisitor)
+}
+
 func (v *CabrilloFieldPrinter) visitMyState(g *MyStateGetter) {
 	g.accept(v.valueVisitor)
 }

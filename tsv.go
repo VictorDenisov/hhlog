@@ -116,6 +116,10 @@ func (fp *TsvFieldPrinter) visitMySotaRef(g *MySotaRefGetter) {
 	g.accept(fp.valueVisitor)
 }
 
+func (fp *TsvFieldPrinter) visitSotaRef(g *SotaRefGetter) {
+	g.accept(fp.valueVisitor)
+}
+
 func (fp *TsvFieldPrinter) visitMyState(g *MyStateGetter) {
 	g.accept(fp.valueVisitor)
 }
